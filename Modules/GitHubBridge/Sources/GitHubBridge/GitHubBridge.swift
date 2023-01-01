@@ -18,6 +18,7 @@ import Foundation
 
 import BMO
 import BMOCoreData
+import LinkHeaderParser
 
 
 
@@ -35,8 +36,9 @@ public struct GitHubBridge : BridgeProtocol {
 		}
 	}
 	
-	public enum Metadata {
-		case none
+	public struct Metadata {
+		public var previousPageURL: URL?
+		public var nextPageURL: URL?
 	}
 	
 	public struct UserInfo {
@@ -77,7 +79,17 @@ public struct GitHubBridge : BridgeProtocol {
 	public func bridgeObjects(for finishedRemoteOperation: GitHubBMOOperation, userInfo: UserInfo) throws -> GitHubBridgeObjects? {
 		let operationResult = try finishedRemoteOperation.results.get()
 		let objects = operationResult.arrayValue ?? [operationResult]
-		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: nil, localEntity: userInfo.requestEntity, localMergeType: .replace)
+		
+		/* Let’s parse the Link header. */
+		var metadata = Metadata()
+		if let linkHeader = finishedRemoteOperation.responseHeaders?["Link"] as? String,
+			let linkValues = LinkHeaderParser.parseLinkHeader(linkHeader, defaultContext: nil, contentLanguageHeader: nil)
+		{
+			metadata.nextPageURL     = linkValues.first{ $0.rel.contains("next") }?.link
+			metadata.previousPageURL = linkValues.first{ $0.rel.contains("prev") }?.link
+		}
+		
+		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: metadata, localEntity: userInfo.requestEntity, localMergeType: .replace)
 	}
 	
 	public func importerForRemoteResults(localRepresentations: [GenericLocalDbObject<NSManagedObject, String, Metadata>], rootMetadata: Metadata?, uniquingIDsPerEntities: [NSEntityDescription : Set<String>], cancellationCheck throwIfCancelled: () throws -> Void) throws -> BMOCoreData.BMOCoreDataImporter<LocalDb, Metadata> {
