@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7B01D6EE20F95D1500F0E967 /* ProjectsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B01D6ED20F95D1500F0E967 /* ProjectsListViewController.swift */; };
-		7B01D6F420FA393300F0E967 /* GitHubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B01D6F320FA393300F0E967 /* GitHubListViewController.swift */; };
+		7B01D6F420FA393300F0E967 /* _GitHubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B01D6F320FA393300F0E967 /* _GitHubListViewController.swift */; };
 		7B04D0BA211F4FC5003BAD34 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B04D0B9211F4FC5003BAD34 /* ProjectViewController.swift */; };
 		7B50DED02961088700B36212 /* BMOCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 7B50DECF2961088700B36212 /* BMOCoreData */; };
 		7B50DED42961098A00B36212 /* BMOCoreDataCollectionLoaders in Frameworks */ = {isa = PBXBuildFile; productRef = 7B50DED32961098A00B36212 /* BMOCoreDataCollectionLoaders */; };
@@ -48,7 +48,7 @@
 
 /* Begin PBXFileReference section */
 		7B01D6ED20F95D1500F0E967 /* ProjectsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsListViewController.swift; sourceTree = "<group>"; };
-		7B01D6F320FA393300F0E967 /* GitHubListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubListViewController.swift; sourceTree = "<group>"; };
+		7B01D6F320FA393300F0E967 /* _GitHubListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _GitHubListViewController.swift; sourceTree = "<group>"; };
 		7B04D0B9211F4FC5003BAD34 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		7B559AB42116EF34002C5E30 /* GistsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GistsListViewController.swift; sourceTree = "<group>"; };
 		7B59183220CB179800D4D9F5 /* GitHub iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,22 +88,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7B59183320CB179800D4D9F5 /* GitHub iOS */ = {
+		7B304727296223B200B01C5D /* App */ = {
 			isa = PBXGroup;
 			children = (
 				7BA81C2E2129B52000F8B2E9 /* Utilities.swift */,
 				7B59183420CB179800D4D9F5 /* AppDelegate.swift */,
 				7B6E7BC429618FD7008430B2 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		7B304728296223C900B01C5D /* SimpleViews */ = {
+			isa = PBXGroup;
+			children = (
 				7B59189320CDCF3900D4D9F5 /* UserViewController.swift */,
 				7B04D0B9211F4FC5003BAD34 /* ProjectViewController.swift */,
 				7BA81C322129DAFD00F8B2E9 /* IssueViewController.swift */,
 				7BA81C342129F05000F8B2E9 /* GistViewController.swift */,
 				7BA81C362129F48600F8B2E9 /* GistFileViewController.swift */,
-				7B01D6F320FA393300F0E967 /* GitHubListViewController.swift */,
+			);
+			path = SimpleViews;
+			sourceTree = "<group>";
+		};
+		7B304729296223EC00B01C5D /* ListViews */ = {
+			isa = PBXGroup;
+			children = (
+				7B01D6F320FA393300F0E967 /* _GitHubListViewController.swift */,
 				7B59188120CC6EEE00D4D9F5 /* UsersListViewController.swift */,
 				7B01D6ED20F95D1500F0E967 /* ProjectsListViewController.swift */,
 				7B559AB42116EF34002C5E30 /* GistsListViewController.swift */,
 				7BA81C302129D29200F8B2E9 /* IssuesListViewController.swift */,
+			);
+			path = ListViews;
+			sourceTree = "<group>";
+		};
+		7B59183320CB179800D4D9F5 /* GitHub iOS */ = {
+			isa = PBXGroup;
+			children = (
+				7B304727296223B200B01C5D /* App */,
+				7B304728296223C900B01C5D /* SimpleViews */,
+				7B304729296223EC00B01C5D /* ListViews */,
 				7B59183A20CB179800D4D9F5 /* Main.storyboard */,
 				7B59183D20CB179A00D4D9F5 /* Assets.xcassets */,
 				7B59183F20CB179A00D4D9F5 /* LaunchScreen.storyboard */,
@@ -241,11 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B01D6F420FA393300F0E967 /* _GitHubListViewController.swift in Sources */,
 				7B59183520CB179800D4D9F5 /* AppDelegate.swift in Sources */,
 				7BA81C372129F48600F8B2E9 /* GistFileViewController.swift in Sources */,
 				7B559AB52116EF34002C5E30 /* GistsListViewController.swift in Sources */,
 				7BA81C352129F05000F8B2E9 /* GistViewController.swift in Sources */,
-				7B01D6F420FA393300F0E967 /* GitHubListViewController.swift in Sources */,
 				7BA81C312129D29200F8B2E9 /* IssuesListViewController.swift in Sources */,
 				7BA81C332129DAFD00F8B2E9 /* IssueViewController.swift in Sources */,
 				7B01D6EE20F95D1500F0E967 /* ProjectsListViewController.swift in Sources */,
