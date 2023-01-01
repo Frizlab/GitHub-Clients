@@ -34,27 +34,40 @@ extension User : GitHubBridgeObject {
 			let searchedUsernameWithStar = usernamePredicate.constantValueExpression?.constantValue as? String,
 			searchedUsernameWithStar.hasSuffix("*"), searchedUsernameWithStar != "*"
 		{
-			/* Search for users. */
+			/* ****************
+			   Search for Users
+			   **************** */
 			let searchedUsername = searchedUsernameWithStar.dropLast()
 			return GitHubBMOOperation(pathComponents: ["search", "users"], queryItems: [.init(name: "q", value: searchedUsername + " in:login")])
+			
 		} else if let starredRepositoriesPredicates = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 								.filter({ $0.keyPathExpression?.keyPath == "starredRepositories" && $0.predicateOperatorType == .contains }),
 					 let starredRepositoriesPredicate = starredRepositoriesPredicates.first, starredRepositoriesPredicates.count == 1,
 					 let starredRepository = starredRepositoriesPredicate.constantValueExpression?.constantValue as? Repository
 		{
+			/* ****************************************************
+			   Search for Users Who Have Starred a Given Repository
+			   **************************************************** */
 			return GitHubBMOOperation(pathComponents: ["repos", starredRepository.owner?.username, starredRepository.name, "stargazers"])
 //			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
 //			userInfo.addedToMixedRepresentations!["starredRepositories"] = ["id": starredRepository.remoteId]
+			
 		} else if let watchedRepositoriesPredicates = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 								.filter({ $0.keyPathExpression?.keyPath == "watchedRepositories" && $0.predicateOperatorType == .contains }),
 					 let watchedRepositoriesPredicate = watchedRepositoriesPredicates.first, watchedRepositoriesPredicates.count == 1,
 					 let watchedRepository = watchedRepositoriesPredicate.constantValueExpression?.constantValue as? Repository
 		{
+			/* ********************************************************
+			   Search for Users Who Have Subscribed to Given Repository
+			   ******************************************************** */
 			return GitHubBMOOperation(pathComponents: ["repos", watchedRepository.owner?.username, watchedRepository.name, "subscribers"])
 //			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
 //			userInfo.addedToMixedRepresentations!["watchedRepositories"] = ["id": watchedRepository.remoteId]
+			
 		} else {
-			/* Un-specific predicate, we use the generic REST path. */
+			/* ***********************************************************
+			   Generic Case: List User Or Get One If username Is Specified
+			   *********************************************************** */
 			let username: String?
 			if let selfUsernames = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 				.filter({ $0.leftExpression.expressionType == .evaluatedObject || $0.rightExpression.expressionType == .evaluatedObject })
