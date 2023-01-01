@@ -19,6 +19,7 @@
 		7B59184120CB179A00D4D9F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B59183F20CB179A00D4D9F5 /* LaunchScreen.storyboard */; };
 		7B59188220CC6EEE00D4D9F5 /* UsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59188120CC6EEE00D4D9F5 /* UsersListViewController.swift */; };
 		7B59189420CDCF3900D4D9F5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59189320CDCF3900D4D9F5 /* UserViewController.swift */; };
+		7B6E7BC529618FD7008430B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6E7BC429618FD7008430B2 /* SceneDelegate.swift */; };
 		7B9AAFBD27DB8D72000CDC84 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFBC27DB8D72000CDC84 /* Alamofire */; };
 		7B9AAFC127DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC027DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences */; };
 		7B9AAFC527DB8D96000CDC84 /* KVObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC427DB8D96000CDC84 /* KVObserver */; };
@@ -57,6 +58,7 @@
 		7B59184220CB179A00D4D9F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B59188120CC6EEE00D4D9F5 /* UsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListViewController.swift; sourceTree = "<group>"; };
 		7B59189320CDCF3900D4D9F5 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		7B6E7BC429618FD7008430B2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7B9AAFCC27DB8F21000CDC84 /* GitHubBridge */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GitHubBridge; sourceTree = "<group>"; };
 		7BA2A33021318074001DD10F /* License.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		7BA81C2E2129B52000F8B2E9 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			children = (
 				7BA81C2E2129B52000F8B2E9 /* Utilities.swift */,
 				7B59183420CB179800D4D9F5 /* AppDelegate.swift */,
+				7B6E7BC429618FD7008430B2 /* SceneDelegate.swift */,
 				7B59189320CDCF3900D4D9F5 /* UserViewController.swift */,
 				7B04D0B9211F4FC5003BAD34 /* ProjectViewController.swift */,
 				7BA81C322129DAFD00F8B2E9 /* IssueViewController.swift */,
@@ -243,6 +246,7 @@
 				7BA81C332129DAFD00F8B2E9 /* IssueViewController.swift in Sources */,
 				7B01D6EE20F95D1500F0E967 /* ProjectsListViewController.swift in Sources */,
 				7B04D0BA211F4FC5003BAD34 /* ProjectViewController.swift in Sources */,
+				7B6E7BC529618FD7008430B2 /* SceneDelegate.swift in Sources */,
 				7B59188220CC6EEE00D4D9F5 /* UsersListViewController.swift in Sources */,
 				7B59189420CDCF3900D4D9F5 /* UserViewController.swift in Sources */,
 				7BA81C2F2129B52000F8B2E9 /* Utilities.swift in Sources */,

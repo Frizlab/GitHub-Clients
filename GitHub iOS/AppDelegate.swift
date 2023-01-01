@@ -35,11 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	private(set) var localDb: GitHubLocalDb!
 	private(set) var pageInfoRetriever: GitHubPageInfoRetriever!
 	
-	private(set) var myUsername: String?
-	
-	private(set) var tabBarController: UITabBarController!
-	
-	var window: UIWindow?
+	var myUsername: String?
 	
 	override init() {
 		super.init()
@@ -58,50 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		localDb = GitHubLocalDb(context: context)
 		pageInfoRetriever = GitHubPageInfoRetriever()
 		
-		tabBarController = (window!.rootViewController! as! UITabBarController)
-		
-		/* Let's fetch the connected username (if any) and add the “you” tab if we get a result. */
-		GitHubBMOOperation.retrieveUsernameFromToken{ username in
-			self.myUsername = username
-			guard let username = username else {return}
-			
-			DispatchQueue.main.async{
-				var hasAddedController = false
-				let addUserController = { (user: User?) -> Void in
-					guard !hasAddedController, let user = user else {return}
-					
-					let youNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YouNavigationViewController") as! UINavigationController
-					let userViewController = youNavigationController.viewControllers.first! as! UserViewController
-					userViewController.shouldRefreshUserOnLoad = false
-					userViewController.title = "You"
-					userViewController.user = user
-					
-					self.tabBarController.viewControllers?.append(youNavigationController)
-					hasAddedController = true
-				}
-//				let (u, _) = self.requestManager.unsafeFetchObject(withRemoteId: username, remoteIdAttributeName: "username", onContext: self.context, handler: { (u: User?, _: Result<BridgeBackRequestResult<GitHubBridge>, Error>) in
-//					addUserController(u)
-//				})
-//				addUserController(u)
-			}
-		}
-		
 		return true
-	}
-	
-	func applicationWillResignActive(_ application: UIApplication) {
-	}
-	
-	func applicationDidEnterBackground(_ application: UIApplication) {
-	}
-	
-	func applicationWillEnterForeground(_ application: UIApplication) {
-	}
-	
-	func applicationDidBecomeActive(_ application: UIApplication) {
-	}
-	
-	func applicationWillTerminate(_ application: UIApplication) {
 	}
 	
 }
