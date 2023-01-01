@@ -66,7 +66,7 @@ extension User : GitHubBridgeObject {
 			} else {
 				username = fetchRequest.predicate?.firstLevelConstants(forKeyPath: "username").last as? String
 			}
-			return GitHubBMOOperation(pathComponents: ["users", username].compactMap{ $0 })
+			return GitHubBMOOperation(pathComponents: ["users", username].compactMap{ $0 } as [String])
 		}
 	}
 	
