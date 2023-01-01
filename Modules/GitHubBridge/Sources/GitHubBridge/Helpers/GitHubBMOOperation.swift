@@ -19,6 +19,7 @@ import Alamofire
 import BMO
 import GenericJSON
 import RetryingOperation
+import UnwrapOrThrow
 
 
 
@@ -51,8 +52,21 @@ public class GitHubBMOOperation : RetryingOperation {
 	public var responseHeaders: [AnyHashable: Any]?
 	public var results: Result<JSON, Error> = .failure(OperationLifecycleError.notStarted)
 	
-	public init(request r: URLRequest) {
-		request = r
+	public convenience init?(pathComponents: [String?], queryItems: [URLQueryItem] = []) {
+		struct NilComponent : Error {}
+		guard let pathComponents = (try? pathComponents.map{ try $0 ?! NilComponent() }) else {
+			return nil
+		}
+		
+		/* Note: We should not join the path components like so (what happens if one contains a “/”?). */
+		let url = URL(string: pathComponents.joined(separator: "/"), relativeTo: GitHubBridgeConfig.apiRoot)!
+		var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+		components.queryItems = (components.queryItems ?? []) + queryItems
+		self.init(request: URLRequest(url: components.url!))
+	}
+	
+	public init(request: URLRequest) {
+		self.request = request
 	}
 	
 	public override func startBaseOperation(isRetry: Bool) {

@@ -20,6 +20,7 @@
 		7B59188220CC6EEE00D4D9F5 /* UsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59188120CC6EEE00D4D9F5 /* UsersListViewController.swift */; };
 		7B59189420CDCF3900D4D9F5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59189320CDCF3900D4D9F5 /* UserViewController.swift */; };
 		7B6E7BC529618FD7008430B2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6E7BC429618FD7008430B2 /* SceneDelegate.swift */; };
+		7B6E7C3A296199D7008430B2 /* UnwrapOrThrow in Frameworks */ = {isa = PBXBuildFile; productRef = 7B6E7C39296199D7008430B2 /* UnwrapOrThrow */; };
 		7B9AAFBD27DB8D72000CDC84 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFBC27DB8D72000CDC84 /* Alamofire */; };
 		7B9AAFC127DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC027DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences */; };
 		7B9AAFC527DB8D96000CDC84 /* KVObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC427DB8D96000CDC84 /* KVObserver */; };
@@ -80,6 +81,7 @@
 				7B9AAFCE27DB8F90000CDC84 /* GitHubBridge in Frameworks */,
 				7B9AAFC527DB8D96000CDC84 /* KVObserver in Frameworks */,
 				7B9AAFC927DB8DA1000CDC84 /* RetryingOperation in Frameworks */,
+				7B6E7C3A296199D7008430B2 /* UnwrapOrThrow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +174,7 @@
 				7B9AAFCD27DB8F90000CDC84 /* GitHubBridge */,
 				7B9AAFC427DB8D96000CDC84 /* KVObserver */,
 				7B9AAFC827DB8DA1000CDC84 /* RetryingOperation */,
+				7B6E7C39296199D7008430B2 /* UnwrapOrThrow */,
 			);
 			productName = "GitHub iOS";
 			productReference = 7B59183220CB179800D4D9F5 /* GitHub iOS.app */;
@@ -209,6 +212,7 @@
 				7B9AAFBB27DB8D5A000CDC84 /* XCRemoteSwiftPackageReference "CollectionLoader" */,
 				7B9AAFB627DB8C0E000CDC84 /* XCRemoteSwiftPackageReference "KVObserver" */,
 				7B9AAFB727DB8CEC000CDC84 /* XCRemoteSwiftPackageReference "RetryingOperation" */,
+				7B6E7C38296199D7008430B2 /* XCRemoteSwiftPackageReference "UnwrapOrThrow" */,
 			);
 			productRefGroup = 7BA7C12B20C9479E00C210B5 /* Products */;
 			projectDirPath = "";
@@ -457,6 +461,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7B6E7C38296199D7008430B2 /* XCRemoteSwiftPackageReference "UnwrapOrThrow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Frizlab/UnwrapOrThrow.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		7B9AAFB627DB8C0E000CDC84 /* XCRemoteSwiftPackageReference "KVObserver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/happn-app/KVObserver.git";
@@ -517,6 +529,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B9AAFBB27DB8D5A000CDC84 /* XCRemoteSwiftPackageReference "CollectionLoader" */;
 			productName = BMOCoreDataCollectionLoaders;
+		};
+		7B6E7C39296199D7008430B2 /* UnwrapOrThrow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B6E7C38296199D7008430B2 /* XCRemoteSwiftPackageReference "UnwrapOrThrow" */;
+			productName = UnwrapOrThrow;
 		};
 		7B9AAFBC27DB8D72000CDC84 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

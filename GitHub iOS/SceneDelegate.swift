@@ -13,9 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+import CoreData
 import Foundation
 import UIKit
 
+import BMO
 import GitHubBridge
 
 
@@ -51,10 +53,22 @@ class SceneDelegate : UIResponder, UIWindowSceneDelegate {
 					tabBarController.viewControllers?.append(youNavigationController)
 					hasAddedController = true
 				}
-//				let (u, _) = self.requestManager.unsafeFetchObject(withRemoteId: username, remoteIdAttributeName: "username", onContext: self.context, handler: { (u: User?, _: Result<BridgeBackRequestResult<GitHubBridge>, Error>) in
-//					addUserController(u)
-//				})
-//				addUserController(u)
+				let fRequest = User.fetchRequest()
+				fRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(User.username), username)
+				let op = RequestOperation(
+					bridge: AppDelegate.shared.bridge,
+					request: .init(localDb: AppDelegate.shared.localDb, localRequest: .fetch(fRequest as! NSFetchRequest<NSFetchRequestResult>), remoteUserInfo: .init()),
+					remoteOperationQueue: OperationQueue(), computeOperationQueue: OperationQueue()
+				)
+				op.completionBlock = {
+					DispatchQueue.main.async{
+						let u = try? AppDelegate.shared.context.fetch(fRequest).first
+						addUserController(u)
+					}
+				}
+				op.start()
+				let u = try? AppDelegate.shared.context.fetch(fRequest).first
+				addUserController(u)
 			}
 			
 		}
