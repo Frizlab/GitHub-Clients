@@ -46,12 +46,12 @@ class FilesTransformer : ValueTransformer {
 	
 	override func transformedValue(_ value: Any?) -> Any? {
 		guard let value  = value          as? [String: Any?]           else {return nil}
-		guard let gistId = value["id"]    as? String                   else {return nil}
+		guard let gistID = value["id"]    as? String                   else {return nil}
 		guard let files  = value["files"] as? [String: [String: Any?]] else {return nil}
 		
 		var ret = [[String: Any?]]()
 		for (filename, var fileinfo) in files {
-			fileinfo["id"] = gistId + " - " + filename
+			fileinfo["id"] = gistID + " - " + filename
 			fileinfo["filename"] = filename
 			ret.append(fileinfo)
 		}

@@ -14,33 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import Foundation
-import UIKit
-
-import Alamofire
-import GitHubBridge
+import os.log
 
 
 
-class GistFileViewController : UIViewController {
+public enum GitHubBridgeConfig {
 	
-	var file: File!
-	
-	@IBOutlet var textView: UITextView!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		let t = file.filename ?? "<unnamed>"
-		title = nil; title = t
-		
-		guard let url = file.rawURL else {
-			textView.text = "Loading Error…"
-			return
-		}
-		
-		AF.request(url).responseString{ response in
-			self.textView.text = (try? response.result.get()) ?? "Loading Error…"
-		}
-	}
+	public static var log: OSLog? = .default
+	public static var apiRoot = URL(string: "https://api.github.com/")!
 	
 }
+
+typealias Conf = GitHubBridgeConfig

@@ -17,7 +17,7 @@ import CoreData
 import Foundation
 import UIKit
 
-import CollectionLoader_RESTCoreData
+import BMOCoreDataCollectionLoaders
 
 import GitHubBridge
 
@@ -60,7 +60,7 @@ class UsersListViewController : GitHubListViewController<User> {
 		cell.textLabel?.text = element.username
 	}
 	
-	override func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> CoreDataSearchCLH<User, GitHubBMOBridge, GitHubPageInfoRetriever> {
+	override func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> BMOCoreDataSearchLoader<GitHubBridge, User, GitHubPageInfoRetriever> {
 		let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
 		
 		let userEntity = User.entity()
@@ -77,7 +77,7 @@ class UsersListViewController : GitHubListViewController<User> {
 					fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.username), ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))]
 				} else {
 					deletionDateProperty = userEntity.attributesByName[#keyPath(User.zDeletionDateInUsersList)]!
-					fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteId), ascending: true)]
+					fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteID), ascending: true)]
 				}
 				
 			case .stargazers(of: let repo):
@@ -85,17 +85,25 @@ class UsersListViewController : GitHubListViewController<User> {
 				deletionDateProperty = ephemeralDeletionDateProperty
 				
 				fetchRequest.predicate = NSPredicate(format: "%K CONTAINS %@", #keyPath(User.starredRepositories), repo)
-				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteId), ascending: true)]
+				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteID), ascending: true)]
 				
 			case .watchers(of: let repo):
 				nullify(property: ephemeralDeletionDateProperty, inInstancesOf: userEntity, context: AppDelegate.shared.context)
 				deletionDateProperty = ephemeralDeletionDateProperty
 				
 				fetchRequest.predicate = NSPredicate(format: "%K CONTAINS %@", #keyPath(User.watchedRepositories), repo)
-				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteId), ascending: true)]
+				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteID), ascending: true)]
 		}
 		
-		return CoreDataSearchCLH(fetchRequest: fetchRequest, additionalFetchInfo: nil, deletionDateProperty: deletionDateProperty, context: AppDelegate.shared.context, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever, requestManager: AppDelegate.shared.requestManager)
+		return try! BMOCoreDataSearchLoader(
+			bridge: AppDelegate.shared.bridge,
+			localDb: AppDelegate.shared.localDb,
+			pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
+			fetchRequest: fetchRequest,
+			deletionDateProperty: deletionDateProperty,
+			fetchRequestToBridgeRequest: { .fetch($0 as! NSFetchRequest<NSFetchRequestResult>) },
+			pageInfoToRequestUserInfo: { _ in GitHubBridge.RequestUserInfo() }
+		)
 	}
 	
 }

@@ -17,7 +17,7 @@ import CoreData
 import Foundation
 import UIKit
 
-import CollectionLoader_RESTCoreData
+import BMOCoreDataCollectionLoaders
 
 import GitHubBridge
 
@@ -47,7 +47,7 @@ class ProjectsListViewController : GitHubListViewController<Repository> {
 		cell.textLabel?.text = element.fullName
 	}
 	
-	override func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> CoreDataSearchCLH<Repository, GitHubBMOBridge, GitHubPageInfoRetriever> {
+	override func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> BMOCoreDataSearchLoader<GitHubBridge, Repository, GitHubPageInfoRetriever> {
 		let fetchRequest: NSFetchRequest<Repository> = Repository.fetchRequest()
 		
 		let repositoryEntity = Repository.entity()
@@ -67,7 +67,7 @@ class ProjectsListViewController : GitHubListViewController<Repository> {
 				} else {
 					apiOrderProperty = nil
 					deletionDateProperty = repositoryEntity.attributesByName[#keyPath(Repository.zDeletionDateInRepositoriesList)]!
-					fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Repository.remoteId), ascending: true)]
+					fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Repository.remoteID), ascending: true)]
 				}
 				
 			case .projects(of: let user):
@@ -84,7 +84,15 @@ class ProjectsListViewController : GitHubListViewController<Repository> {
 				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Repository.updateDate), ascending: false)]
 		}
 		
-		return CoreDataSearchCLH(fetchRequest: fetchRequest, additionalFetchInfo: nil, apiOrderProperty: apiOrderProperty, deletionDateProperty: deletionDateProperty, context: AppDelegate.shared.context, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever, requestManager: AppDelegate.shared.requestManager)
+		return try! BMOCoreDataSearchLoader(
+			bridge: AppDelegate.shared.bridge,
+			localDb: AppDelegate.shared.localDb,
+			pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
+			fetchRequest: fetchRequest,
+			deletionDateProperty: deletionDateProperty,
+			fetchRequestToBridgeRequest: { .fetch($0 as! NSFetchRequest<NSFetchRequestResult>) },
+			pageInfoToRequestUserInfo: { _ in GitHubBridge.RequestUserInfo() }
+		)
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

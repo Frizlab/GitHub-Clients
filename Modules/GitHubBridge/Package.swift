@@ -4,15 +4,17 @@ import PackageDescription
 
 let package = Package(
 	name: "GitHubBridge",
-	platforms: [.iOS(.v12)],
+	platforms: [.iOS(.v13)],
 	products: [.library(name: "GitHubBridge", targets: ["GitHubBridge"])],
 	dependencies: [
 		.package(url: "https://github.com/Frizlab/LinkHeaderParser.git", branch: "main"),
-		.package(url: "https://github.com/happn-app/BMO.git", branch: "dev.tests")
+		.package(url: "https://github.com/Frizlab/BMO.git", branch: "dev.bmo2"),
+		.package(url: "https://github.com/iwill/generic-json-swift.git", from: "2.0.2")
 	],
 	targets: [
 		.target(name: "GitHubBridge", dependencies: [
-			.product(name: "Jake", package: "BMO"),
+			.product(name: "BMOCoreData", package: "BMO"),
+			.product(name: "GenericJSON", package: "generic-json-swift"),
 			.product(name: "LinkHeaderParser", package: "LinkHeaderParser")
 		]/*, swiftSettings: [
 			.unsafeFlags(["-Xfrontend", "-warn-concurrency", "-Xfrontend", "-enable-actor-data-race-checks"])

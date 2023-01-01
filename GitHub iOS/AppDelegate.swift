@@ -18,7 +18,7 @@ import os.log
 import UIKit
 
 import BMO
-import BMO_CoreData
+import BMOCoreData
 
 import GitHubBridge
 
@@ -30,7 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	static private(set) var shared: AppDelegate!
 	
 	private(set) var context: NSManagedObjectContext!
-	private(set) var requestManager: RequestManager!
+//	private(set) var requestManager: RequestManager!
+	private(set) var bridge: GitHubBridge!
+	private(set) var localDb: GitHubLocalDb!
 	private(set) var pageInfoRetriever: GitHubPageInfoRetriever!
 	
 	private(set) var myUsername: String?
@@ -47,11 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		let container = NSPersistentContainer(name: "GitHub", managedObjectModel: GitHubBMOBridge.model)
+		let container = NSPersistentContainer(name: "GitHub", managedObjectModel: GitHubBridge.coreDataModel)
 		container.loadPersistentStores(completionHandler: { _, _ in })
 		context = container.viewContext
 		
-		requestManager = RequestManager(bridges: [GitHubBMOBridge(dbModel: container.managedObjectModel)], resultsImporterFactory: BMOBackResultsImporterForCoreDataWithFastImportRepresentationFactory())
+//		requestManager = RequestManager(bridges: [GitHubBridge()], resultsImporterFactory: BMOBackResultsImporterForCoreDataWithFastImportRepresentationFactory())
+		bridge = GitHubBridge()
+		localDb = GitHubLocalDb(context: context)
 		pageInfoRetriever = GitHubPageInfoRetriever()
 		
 		tabBarController = (window!.rootViewController! as! UITabBarController)
@@ -75,10 +79,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					self.tabBarController.viewControllers?.append(youNavigationController)
 					hasAddedController = true
 				}
-				let (u, _) = self.requestManager.unsafeFetchObject(withRemoteId: username, remoteIdAttributeName: "username", onContext: self.context, handler: { (u: User?, _: Result<BridgeBackRequestResult<GitHubBMOBridge>, Error>) in
-					addUserController(u)
-				})
-				addUserController(u)
+//				let (u, _) = self.requestManager.unsafeFetchObject(withRemoteId: username, remoteIdAttributeName: "username", onContext: self.context, handler: { (u: User?, _: Result<BridgeBackRequestResult<GitHubBridge>, Error>) in
+//					addUserController(u)
+//				})
+//				addUserController(u)
 			}
 		}
 		
@@ -98,15 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func applicationWillTerminate(_ application: UIApplication) {
-	}
-	
-	private struct BMOBackResultsImporterForCoreDataWithFastImportRepresentationFactory : AnyBackResultsImporterFactory {
-		
-		func createResultsImporter<BridgeType : Bridge>() -> AnyBackResultsImporter<BridgeType>? {
-			assert(BridgeType.self == GitHubBMOBridge.self)
-			return (AnyBackResultsImporter(importer: BackResultsImporterForCoreDataWithFastImportRepresentation<GitHubBMOBridge>(uniquingPropertyName: "bmoId")) as! AnyBackResultsImporter<BridgeType>)
-		}
-		
 	}
 	
 }

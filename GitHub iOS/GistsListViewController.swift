@@ -17,7 +17,7 @@ import CoreData
 import Foundation
 import UIKit
 
-import CollectionLoader_RESTCoreData
+import BMOCoreDataCollectionLoaders
 
 import GitHubBridge
 
@@ -55,7 +55,7 @@ class GistsListViewController: GitHubListViewController<Gist> {
 		cell.textLabel?.text = element.firstFileName
 	}
 	
-	override func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> CoreDataSearchCLH<Gist, GitHubBMOBridge, GitHubPageInfoRetriever> {
+	override func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> BMOCoreDataSearchLoader<GitHubBridge, Gist, GitHubPageInfoRetriever> {
 		assert(searchText == nil)
 		let fetchRequest: NSFetchRequest<Gist> = Gist.fetchRequest()
 		
@@ -74,7 +74,15 @@ class GistsListViewController: GitHubListViewController<Gist> {
 				fetchRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(Gist.owner), user)
 				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Gist.creationDate), ascending: false)]
 		}
-		return CoreDataSearchCLH(fetchRequest: fetchRequest, additionalFetchInfo: nil, deletionDateProperty: deletionDateProperty, context: AppDelegate.shared.context, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever, requestManager: AppDelegate.shared.requestManager)
+		return try! BMOCoreDataSearchLoader(
+			bridge: AppDelegate.shared.bridge,
+			localDb: AppDelegate.shared.localDb,
+			pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
+			fetchRequest: fetchRequest,
+			deletionDateProperty: deletionDateProperty,
+			fetchRequestToBridgeRequest: { .fetch($0 as! NSFetchRequest<NSFetchRequestResult>) },
+			pageInfoToRequestUserInfo: { _ in GitHubBridge.RequestUserInfo() }
+		)
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

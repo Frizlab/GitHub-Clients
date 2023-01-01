@@ -1,5 +1,5 @@
 /*
-Copyright 2018 happn
+Copyright 2023 happn
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,17 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+import CoreData
 import Foundation
-import os.log
+
+import BMO
 
 
 
-public struct DependencyInjection {
+public struct GitHubLocalDb : LocalDbProtocol {
 	
-	public var log: OSLog? = .default
+	public typealias UniquingID = String
 	
-	public var apiRoot = URL(string: "https://api.github.com/")!
+	public typealias DbObject = NSManagedObject
+	public enum DbRequest {
+		
+		case fetch(NSFetchRequest<NSFetchRequestResult>)
+		case create(NSManagedObject)
+		case update(NSManagedObject)
+		case delete(NSManagedObject)
+		
+	}
+	
+	public var context: NSManagedObjectContext
+	
+	public init(context: NSManagedObjectContext) {
+		self.context = context
+	}
 	
 }
-
-public var di = DependencyInjection()

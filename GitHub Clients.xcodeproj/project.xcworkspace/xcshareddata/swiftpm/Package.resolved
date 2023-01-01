@@ -6,17 +6,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "747c8db8d57b68d5e35275f10c92d55f982adbd4",
-          "version": "4.9.1"
-        }
-      },
-      {
-        "package": "BMO",
-        "repositoryURL": "https://github.com/happn-app/BMO.git",
-        "state": {
-          "branch": "dev.tests",
-          "revision": "a0173f3b2219ae6079064118c0885b93e900312e",
-          "version": null
+          "revision": "78424be314842833c04bc3bef5b72e85fff99204",
+          "version": "5.6.4"
         }
       },
       {
@@ -29,12 +20,30 @@
         }
       },
       {
-        "package": "CollectionLoader",
-        "repositoryURL": "https://github.com/happn-app/CollectionLoader.git",
+        "package": "BMO",
+        "repositoryURL": "https://github.com/Frizlab/BMO.git",
         "state": {
-          "branch": "dev.tests",
-          "revision": "300477436701d7a650ad2b8530baa9885a4c80c1",
+          "branch": "dev.bmo2",
+          "revision": "ec34dd29ee40d16b1c834bf06236bc73b26db243",
           "version": null
+        }
+      },
+      {
+        "package": "CollectionLoader",
+        "repositoryURL": "https://github.com/Frizlab/CollectionLoader.git",
+        "state": {
+          "branch": "dev.bmo2",
+          "revision": "d7b3c15032511c32aed6f30d05b8701dde9056d5",
+          "version": null
+        }
+      },
+      {
+        "package": "GenericJSON",
+        "repositoryURL": "https://github.com/iwill/generic-json-swift.git",
+        "state": {
+          "branch": null,
+          "revision": "0a06575f4038b504e78ac330913d920f1630f510",
+          "version": "2.0.2"
         }
       },
       {

@@ -18,7 +18,7 @@ import Foundation
 import UIKit
 
 import BMO
-import BMO_RESTCoreData
+import BMOCoreData
 import GitHubBridge
 
 
@@ -35,13 +35,17 @@ class GistViewController : UITableViewController, NSFetchedResultsControllerDele
 		
 		let fetchRequest: NSFetchRequest<Gist> = Gist.fetchRequest()
 		fetchRequest.predicate = NSPredicate(format: "SELF == %@", gist)
-		fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Gist.bmoId), ascending: true)]
+		fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Gist.bmoID), ascending: true)]
 		fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: gist.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
 		
 		self.fetchedResultsController?.delegate = self
 		try! self.fetchedResultsController?.performFetch()
 		
-		let _: BackRequestOperation<RESTCoreDataFetchRequest, GitHubBMOBridge> = AppDelegate.shared.requestManager.fetchObject(fromFetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>, additionalRequestInfo: nil, onContext: AppDelegate.shared.context)
+		RequestOperation(
+			bridge: AppDelegate.shared.bridge,
+			request: .init(localDb: AppDelegate.shared.localDb, localRequest: .fetch(fetchRequest as! NSFetchRequest<any NSFetchRequestResult>), remoteUserInfo: .init()),
+			remoteOperationQueue: OperationQueue(), computeOperationQueue: OperationQueue()
+		).start()
 		
 		tableView.reloadData()
 	}

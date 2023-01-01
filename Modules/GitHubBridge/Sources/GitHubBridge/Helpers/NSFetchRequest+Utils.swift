@@ -1,5 +1,5 @@
 /*
-Copyright 2018 happn
+Copyright 2023 happn
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,25 +16,14 @@ limitations under the License. */
 import CoreData
 import Foundation
 
-import RESTUtils
 
 
-
-/* Directly from BMO. See the CoreData+RESTPath file. */
-extension NSManagedObject : RESTPathKeyResovable {
+extension NSFetchRequest {
 	
-	public func restPathObject(for key: String) -> Any? {
-		guard !key.isEmpty else {return self}
-		guard entity.propertiesByName.keys.contains(key) else {return nil}
-		return value(forKey: key)
-	}
-	
-}
-
-extension NSNumber : RESTPathStringConvertible {
-	
-	public var stringValueForRESTPath: String {
-		return self.stringValue
+	@objc
+	func safeEntity(using model: NSManagedObjectModel) -> NSEntityDescription? {
+		/* Apparently if self.entity is accessed when it is not explicitly set, an (objc) exception is thrown… */
+		entityName.flatMap{ model.entitiesByName[$0] }
 	}
 	
 }

@@ -18,7 +18,7 @@ import Foundation
 import UIKit
 
 import BMO
-import BMO_RESTCoreData
+import BMOCoreData
 
 import GitHubBridge
 
@@ -49,7 +49,11 @@ class ProjectViewController : UIViewController, NSFetchedResultsControllerDelega
 		self.fetchedResultsController?.delegate = self
 		try! self.fetchedResultsController?.performFetch()
 		
-		let _: BackRequestOperation<RESTCoreDataFetchRequest, GitHubBMOBridge> = AppDelegate.shared.requestManager.fetchObject(fromFetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>, additionalRequestInfo: nil, onContext: AppDelegate.shared.context)
+		RequestOperation(
+			bridge: AppDelegate.shared.bridge,
+			request: .init(localDb: AppDelegate.shared.localDb, localRequest: .fetch(fetchRequest as! NSFetchRequest<any NSFetchRequestResult>), remoteUserInfo: .init()),
+			remoteOperationQueue: OperationQueue(), computeOperationQueue: OperationQueue()
+		).start()
 		
 		updateUI()
 	}

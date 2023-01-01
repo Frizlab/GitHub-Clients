@@ -17,9 +17,9 @@ import CoreData
 import Foundation
 import UIKit
 
+import BMOCoreDataCollectionLoaders
 import CollectionAndTableViewUpdateConveniences
 import CollectionLoader
-import CollectionLoader_RESTCoreData
 
 import GitHubBridge
 
@@ -29,7 +29,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 	
 	var cellIdentifier: String!
 	
-	private(set) var collectionLoader: CollectionLoader<CoreDataSearchCLH<ListElement, GitHubBMOBridge, GitHubPageInfoRetriever>>!
+	private(set) var collectionLoader: CollectionLoader<BMOCoreDataSearchLoader<GitHubBridge, ListElement, GitHubPageInfoRetriever>>!
 	private(set) var searchController: UISearchController!
 	
 	var resultsController: NSFetchedResultsController<ListElement> {
@@ -90,7 +90,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		fatalError("Abstract method called.")
 	}
 	
-	func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> CoreDataSearchCLH<ListElement, GitHubBMOBridge, GitHubPageInfoRetriever> {
+	func collectionLoaderHelper(for searchText: String?, context: NSManagedObjectContext) -> BMOCoreDataSearchLoader<GitHubBridge, ListElement, GitHubPageInfoRetriever> {
 		fatalError("Abstract method called.")
 	}
 	
@@ -114,7 +114,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 	
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if indexPath.section == tableView.numberOfSections-1 && indexPath.row >= tableView.numberOfRows(inSection: indexPath.section)-5 {
-			collectionLoader.loadNextPage()
+//			collectionLoader.loadNextPage()
 		}
 	}
 	
@@ -163,14 +163,14 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		guard searchText != currentSearch || collectionLoader == nil else {return}
 		currentSearch = searchText
 		
-		collectionLoader?.cancelAllLoadings()
+//		collectionLoader?.cancelAllLoadings()
 		collectionLoader?.helper.resultsController.delegate = nil
 		
 		let clh = collectionLoaderHelper(for: searchText, context: AppDelegate.shared.context)
-		collectionLoader = CollectionLoader(collectionLoaderHelper: clh, numberOfElementsPerPage: numberOfElementsPerPage)
-		collectionLoader.isLoadingFirstPageChangedHandler = { [weak self] in self?.collectionLoaderIsLoadingFirstPageChangedHandler() }
+		collectionLoader = CollectionLoader(helper: clh)
+//		collectionLoader.isLoadingFirstPageChangedHandler = { [weak self] in self?.collectionLoaderIsLoadingFirstPageChangedHandler() }
 		collectionLoader.helper.resultsController.delegate = self
-		collectionLoader.loadFirstPage()
+		collectionLoader.loadInitialPage()
 		
 		tableView.reloadData()
 	}
@@ -178,15 +178,15 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 	private func collectionLoaderIsLoadingFirstPageChangedHandler() {
 		guard !blockSetRefreshControlIsRefreshing, let refreshControl = refreshControl else {return}
 		
-		let isLoading = collectionLoader.isLoadingFirstPage
-		guard isLoading != refreshControl.isRefreshing else {return}
-		if !isLoading {refreshControl.endRefreshing()}
-		else          {refreshControl.beginRefreshing()}
+//		let isLoading = collectionLoader.isLoadingFirstPage
+//		guard isLoading != refreshControl.isRefreshing else {return}
+//		if !isLoading {refreshControl.endRefreshing()}
+//		else          {refreshControl.beginRefreshing()}
 	}
 	
 	@objc
 	@IBAction func refreshTableView(_ sender: AnyObject) {
-		collectionLoader.loadFirstPage()
+		collectionLoader.loadInitialPage()
 	}
 	
 }

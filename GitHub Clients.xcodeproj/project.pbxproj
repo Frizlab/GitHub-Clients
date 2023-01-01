@@ -10,6 +10,8 @@
 		7B01D6EE20F95D1500F0E967 /* ProjectsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B01D6ED20F95D1500F0E967 /* ProjectsListViewController.swift */; };
 		7B01D6F420FA393300F0E967 /* GitHubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B01D6F320FA393300F0E967 /* GitHubListViewController.swift */; };
 		7B04D0BA211F4FC5003BAD34 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B04D0B9211F4FC5003BAD34 /* ProjectViewController.swift */; };
+		7B50DED02961088700B36212 /* BMOCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 7B50DECF2961088700B36212 /* BMOCoreData */; };
+		7B50DED42961098A00B36212 /* BMOCoreDataCollectionLoaders in Frameworks */ = {isa = PBXBuildFile; productRef = 7B50DED32961098A00B36212 /* BMOCoreDataCollectionLoaders */; };
 		7B559AB52116EF34002C5E30 /* GistsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B559AB42116EF34002C5E30 /* GistsListViewController.swift */; };
 		7B59183520CB179800D4D9F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59183420CB179800D4D9F5 /* AppDelegate.swift */; };
 		7B59183C20CB179800D4D9F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B59183A20CB179800D4D9F5 /* Main.storyboard */; };
@@ -17,11 +19,8 @@
 		7B59184120CB179A00D4D9F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B59183F20CB179A00D4D9F5 /* LaunchScreen.storyboard */; };
 		7B59188220CC6EEE00D4D9F5 /* UsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59188120CC6EEE00D4D9F5 /* UsersListViewController.swift */; };
 		7B59189420CDCF3900D4D9F5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B59189320CDCF3900D4D9F5 /* UserViewController.swift */; };
-		7B73115227DB933B003B6A38 /* RESTUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 7B73115127DB933B003B6A38 /* RESTUtils */; };
 		7B9AAFBD27DB8D72000CDC84 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFBC27DB8D72000CDC84 /* Alamofire */; };
-		7B9AAFBF27DB8D7E000CDC84 /* Jake in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFBE27DB8D7E000CDC84 /* Jake */; };
 		7B9AAFC127DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC027DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences */; };
-		7B9AAFC327DB8D8B000CDC84 /* CollectionLoader in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC227DB8D8B000CDC84 /* CollectionLoader */; };
 		7B9AAFC527DB8D96000CDC84 /* KVObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC427DB8D96000CDC84 /* KVObserver */; };
 		7B9AAFC927DB8DA1000CDC84 /* RetryingOperation in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFC827DB8DA1000CDC84 /* RetryingOperation */; };
 		7B9AAFCE27DB8F90000CDC84 /* GitHubBridge in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9AAFCD27DB8F90000CDC84 /* GitHubBridge */; };
@@ -73,12 +72,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B9AAFBD27DB8D72000CDC84 /* Alamofire in Frameworks */,
+				7B50DED02961088700B36212 /* BMOCoreData in Frameworks */,
+				7B50DED42961098A00B36212 /* BMOCoreDataCollectionLoaders in Frameworks */,
 				7B9AAFC127DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences in Frameworks */,
-				7B9AAFC327DB8D8B000CDC84 /* CollectionLoader in Frameworks */,
 				7B9AAFCE27DB8F90000CDC84 /* GitHubBridge in Frameworks */,
-				7B9AAFBF27DB8D7E000CDC84 /* Jake in Frameworks */,
 				7B9AAFC527DB8D96000CDC84 /* KVObserver in Frameworks */,
-				7B73115227DB933B003B6A38 /* RESTUtils in Frameworks */,
 				7B9AAFC927DB8DA1000CDC84 /* RetryingOperation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,12 +163,11 @@
 			name = "GitHub iOS";
 			packageProductDependencies = (
 				7B9AAFBC27DB8D72000CDC84 /* Alamofire */,
+				7B50DECF2961088700B36212 /* BMOCoreData */,
+				7B50DED32961098A00B36212 /* BMOCoreDataCollectionLoaders */,
 				7B9AAFC027DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences */,
-				7B9AAFC227DB8D8B000CDC84 /* CollectionLoader */,
 				7B9AAFCD27DB8F90000CDC84 /* GitHubBridge */,
-				7B9AAFBE27DB8D7E000CDC84 /* Jake */,
 				7B9AAFC427DB8D96000CDC84 /* KVObserver */,
-				7B73115127DB933B003B6A38 /* RESTUtils */,
 				7B9AAFC827DB8DA1000CDC84 /* RetryingOperation */,
 			);
 			productName = "GitHub iOS";
@@ -184,7 +181,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = happn;
 				TargetAttributes = {
 					7B59183120CB179800D4D9F5 = {
@@ -347,6 +344,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -364,7 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -409,6 +407,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -420,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -483,52 +482,47 @@
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.7.0;
+				minimumVersion = 5.6.4;
 			};
 		};
 		7B9AAFBA27DB8D40000CDC84 /* XCRemoteSwiftPackageReference "BMO" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/happn-app/BMO.git";
+			repositoryURL = "https://github.com/Frizlab/BMO.git";
 			requirement = {
-				branch = dev.tests;
+				branch = dev.bmo2;
 				kind = branch;
 			};
 		};
 		7B9AAFBB27DB8D5A000CDC84 /* XCRemoteSwiftPackageReference "CollectionLoader" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/happn-app/CollectionLoader.git";
+			repositoryURL = "https://github.com/Frizlab/CollectionLoader.git";
 			requirement = {
-				branch = dev.tests;
+				branch = dev.bmo2;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7B73115127DB933B003B6A38 /* RESTUtils */ = {
+		7B50DECF2961088700B36212 /* BMOCoreData */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B9AAFBA27DB8D40000CDC84 /* XCRemoteSwiftPackageReference "BMO" */;
-			productName = RESTUtils;
+			productName = BMOCoreData;
+		};
+		7B50DED32961098A00B36212 /* BMOCoreDataCollectionLoaders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B9AAFBB27DB8D5A000CDC84 /* XCRemoteSwiftPackageReference "CollectionLoader" */;
+			productName = BMOCoreDataCollectionLoaders;
 		};
 		7B9AAFBC27DB8D72000CDC84 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B9AAFB927DB8D29000CDC84 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		7B9AAFBE27DB8D7E000CDC84 /* Jake */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B9AAFBA27DB8D40000CDC84 /* XCRemoteSwiftPackageReference "BMO" */;
-			productName = Jake;
-		};
 		7B9AAFC027DB8D86000CDC84 /* CollectionAndTableViewUpdateConveniences */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B9AAFB827DB8D0E000CDC84 /* XCRemoteSwiftPackageReference "CollectionAndTableViewUpdateConveniences" */;
 			productName = CollectionAndTableViewUpdateConveniences;
-		};
-		7B9AAFC227DB8D8B000CDC84 /* CollectionLoader */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B9AAFBB27DB8D5A000CDC84 /* XCRemoteSwiftPackageReference "CollectionLoader" */;
-			productName = CollectionLoader;
 		};
 		7B9AAFC427DB8D96000CDC84 /* KVObserver */ = {
 			isa = XCSwiftPackageProductDependency;

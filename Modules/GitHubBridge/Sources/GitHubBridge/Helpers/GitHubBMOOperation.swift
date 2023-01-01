@@ -16,46 +16,42 @@ limitations under the License. */
 import Foundation
 
 import Alamofire
+import BMO
+import GenericJSON
 import RetryingOperation
 
 
 
 public class GitHubBMOOperation : RetryingOperation {
 	
-	public static var gitHubToken: String? {
+	public static var gitHubToken: String? = {
 		/* Let's read the token from a hard-coded file. */
 		let desktopPath = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true).first!
 		let re = try! NSRegularExpression(pattern: "/Users/([^/]*)/.*", options: [])
 		let username = re.stringByReplacingMatches(in: desktopPath, options: [], range: NSRange(location: 0, length: (desktopPath as NSString).length), withTemplate: "$1")
 		return (
-			(try? String(contentsOf: URL(fileURLWithPath: "github_clients_token.txt", isDirectory: false, relativeTo: URL(fileURLWithPath: desktopPath, isDirectory: true)))) ??
+			(try? String(contentsOf: URL(fileURLWithPath: "github_clients_token.txt",                            isDirectory: false, relativeTo: URL(fileURLWithPath: desktopPath, isDirectory: true)))) ??
 			(try? String(contentsOf: URL(fileURLWithPath: "/Users/\(username)/Desktop/github_clients_token.txt", isDirectory: false)))
 		)
-	}
+	}()
 	
 	public static func retrieveUsernameFromToken(_ handler: @escaping (_ username: String?) -> Void) {
 		guard gitHubToken != nil else {handler(nil); return}
 		if let u = cachedUsernameFromToken {handler(u); return}
 		
-		let retrieveUsernameOperation = GitHubBMOOperation(request: URLRequest(url: URL(string: "user", relativeTo: di.apiRoot)!))
+		let retrieveUsernameOperation = GitHubBMOOperation(request: URLRequest(url: URL(string: "user", relativeTo: Conf.apiRoot)!))
 		retrieveUsernameOperation.completionBlock = {
-			cachedUsernameFromToken = (retrieveUsernameOperation.results.successValue as? [String: Any?])?["login"] as? String
+			cachedUsernameFromToken = (try? retrieveUsernameOperation.results.get())?["login"]?.stringValue
 			handler(cachedUsernameFromToken)
 		}
 		retrieveUsernameOperation.start()
 	}
 	
-	public enum Err : Error {
-		case operationNotFinished
-		case okIsNotOk
-		case unknownError
-	}
+	public let request: URLRequest
+	public var responseHeaders: [AnyHashable: Any]?
+	public var results: Result<JSON, Error> = .failure(OperationLifecycleError.notStarted)
 	
-	let request: URLRequest
-	var responseHeaders: [AnyHashable: Any]?
-	var results: Swift.Result<Any, Error> = .failure(Err.operationNotFinished)
-	
-	init(request r: URLRequest) {
+	public init(request r: URLRequest) {
 		request = r
 	}
 	
@@ -63,19 +59,15 @@ public class GitHubBMOOperation : RetryingOperation {
 		print("Starting GitHub BMO Operation with URLRequest \(request)")
 		
 		var authenticatedRequest = request
-		if let token = GitHubBMOOperation.gitHubToken {
+		if let token = Self.gitHubToken {
 //			print("   -> Authenticating request with token found in Desktop file")
-			authenticatedRequest.addValue("token \(token)", forHTTPHeaderField: "Authorization")
+			authenticatedRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 		}
 		
-		Alamofire.request(authenticatedRequest).validate().responseJSON{ response in
+		AF.request(authenticatedRequest).validate().responseDecodable{ (response: DataResponse<JSON, AFError>) in
 //			print(response.result.value)
 			self.responseHeaders = response.response?.allHeaderFields
-			if let parsedJSON = response.result.value {
-				self.results = .success(parsedJSON)
-			} else {
-				self.results = .failure(response.error ?? Err.unknownError)
-			}
+			self.results = response.result.mapError{ $0 as Error }
 			self.baseOperationEnded()
 		}
 	}
