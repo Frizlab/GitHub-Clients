@@ -71,7 +71,8 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		 * will not be updated and we won't be able to show the refresh control.
 		 * So we have to block the update until the view _did_ appear. */
 		blockSetRefreshControlIsRefreshing = false
-		collectionLoaderIsLoadingFirstPageChangedHandler()
+#warning("TODO: Add current loading state in CollectionLoader")
+//		updateRefreshControl(loading: collectionLoader.)
 	}
 	
 	/* ***********************
@@ -168,6 +169,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		
 		let clh = collectionLoaderHelper(for: searchText, context: AppDelegate.shared.context)
 		collectionLoader = CollectionLoader(helper: clh)
+		collectionLoader.delegate = self
 //		collectionLoader.isLoadingFirstPageChangedHandler = { [weak self] in self?.collectionLoaderIsLoadingFirstPageChangedHandler() }
 		collectionLoader.helper.resultsController.delegate = self
 		collectionLoader.loadInitialPage()
@@ -175,18 +177,36 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		tableView.reloadData()
 	}
 	
-	private func collectionLoaderIsLoadingFirstPageChangedHandler() {
-		guard !blockSetRefreshControlIsRefreshing, let refreshControl = refreshControl else {return}
-		
-//		let isLoading = collectionLoader.isLoadingFirstPage
-//		guard isLoading != refreshControl.isRefreshing else {return}
-//		if !isLoading {refreshControl.endRefreshing()}
-//		else          {refreshControl.beginRefreshing()}
-	}
-	
 	@objc
 	@IBAction func refreshTableView(_ sender: AnyObject) {
 		collectionLoader.loadInitialPage()
+	}
+	
+}
+
+
+extension GitHubListViewController : CollectionLoaderDelegate {
+	
+	typealias CollectionLoaderHelper = BMOCoreDataSearchLoader<GitHubBridge, ListElement, GitHubPageInfoRetriever>
+	
+	func willStartLoading(pageLoadDescription: CLDPageLoadDescription) {
+		updateRefreshControl(loading: pageLoadDescription.loadingReason == .initialPage)
+	}
+	
+	func didFinishLoading(pageLoadDescription: CLDPageLoadDescription, results: Result<CompletionResults, Error>) {
+		updateRefreshControl(loading: false)
+	}
+	
+	private func updateRefreshControl(loading: Bool) {
+		guard !blockSetRefreshControlIsRefreshing,
+				let refreshControl = refreshControl,
+				loading != refreshControl.isRefreshing
+		else {
+			return
+		}
+		
+		if !loading {refreshControl.endRefreshing()}
+		else        {refreshControl.beginRefreshing()}
 	}
 	
 }
