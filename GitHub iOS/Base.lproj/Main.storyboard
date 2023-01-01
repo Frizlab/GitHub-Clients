@@ -13,7 +13,7 @@
             <objects>
                 <tableViewController title="Users" id="dPa-Qm-xM4" customClass="UsersListViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Me-Ng-J0z">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -57,7 +57,7 @@
             <objects>
                 <tableViewController title="Projects" id="tpG-qC-ZZO" customClass="ProjectsListViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Yku-RO-Gwy">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -101,30 +101,30 @@
             <objects>
                 <viewController id="DCL-MX-Nkh" customClass="ProjectViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i64-gT-uHg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading…" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRn-oZ-rkH">
-                                <rect key="frame" x="16" y="25" width="288" height="33.5"/>
+                                <rect key="frame" x="16" y="69" width="288" height="33.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ff-sA-yHW">
-                                <rect key="frame" x="16" y="66.5" width="288" height="20.5"/>
+                                <rect key="frame" x="16" y="110.5" width="288" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hrh-C6-Oea">
-                                <rect key="frame" x="16" y="107" width="115" height="30"/>
+                                <rect key="frame" x="16" y="151" width="115" height="30"/>
                                 <state key="normal" title="See Open Issues"/>
                                 <connections>
                                     <segue destination="n3J-e2-hhn" kind="show" identifier="ShowOpenIssues" id="tDD-jp-dka"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gwa-hR-8P1">
-                                <rect key="frame" x="16" y="145" width="104" height="30"/>
+                                <rect key="frame" x="16" y="189" width="104" height="30"/>
                                 <state key="normal" title="See Stargazers"/>
                                 <connections>
                                     <segue destination="dPa-Qm-xM4" kind="show" identifier="ShowStargazers" id="3ON-Jy-Iwf">
@@ -134,7 +134,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWn-AB-59E">
-                                <rect key="frame" x="16" y="183" width="95" height="30"/>
+                                <rect key="frame" x="16" y="227" width="95" height="30"/>
                                 <state key="normal" title="See Watchers"/>
                                 <connections>
                                     <segue destination="dPa-Qm-xM4" kind="show" identifier="ShowWatchers" id="gsx-La-c3z">
@@ -181,7 +181,7 @@
             <objects>
                 <tableViewController title="Gists" id="K24-eK-oic" customClass="GistsListViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CnB-as-uNN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -259,31 +259,31 @@
             <objects>
                 <viewController title="User" id="yuO-rZ-jW1" customClass="UserViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RSW-yo-ZGw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading…" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tal-ZN-SWh">
-                                <rect key="frame" x="16" y="25" width="288" height="33.5"/>
+                                <rect key="frame" x="16" y="69" width="288" height="33.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q7s-Mg-c3A">
-                                <rect key="frame" x="16" y="78.5" width="161" height="30"/>
+                                <rect key="frame" x="16" y="122.5" width="161" height="30"/>
                                 <state key="normal" title="See Public Repositories"/>
                                 <connections>
                                     <segue destination="tpG-qC-ZZO" kind="show" identifier="ShowRepositories" id="PAU-bi-nBp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uc0-Er-jJf">
-                                <rect key="frame" x="16" y="116.5" width="111" height="30"/>
+                                <rect key="frame" x="16" y="160.5" width="111" height="30"/>
                                 <state key="normal" title="See Public Gists"/>
                                 <connections>
                                     <segue destination="K24-eK-oic" kind="show" identifier="ShowGists" id="rPM-c9-FAf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFC-QC-I9J">
-                                <rect key="frame" x="16" y="154.5" width="141" height="30"/>
+                                <rect key="frame" x="16" y="198.5" width="141" height="30"/>
                                 <state key="normal" title="See Assigned Issues"/>
                                 <connections>
                                     <segue destination="n3J-e2-hhn" kind="show" identifier="ShowIssues" id="cGU-Jg-xaJ"/>
@@ -324,7 +324,7 @@
             <objects>
                 <tableViewController id="n3J-e2-hhn" customClass="IssuesListViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="xRS-5D-GWs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -364,11 +364,11 @@
             <objects>
                 <viewController id="mJn-1e-0wg" customClass="IssueViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SUA-g3-Po6">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AM7-M2-vsv">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Issue Body&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVY-zy-yRn">
                                         <rect key="frame" x="16" y="53.5" width="104" height="20.5"/>
@@ -469,7 +469,7 @@
             <objects>
                 <tableViewController id="kQ5-ep-Qgy" customClass="GistViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fO5-KC-DUQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -529,11 +529,11 @@
             <objects>
                 <viewController id="BQ4-8T-WA7" customClass="GistFileViewController" customModule="GitHub_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6yD-uQ-y12">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Loading…" translatesAutoresizingMaskIntoConstraints="NO" id="DFz-lV-JCw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="13"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -562,9 +562,9 @@
         <segue reference="UA0-xw-ANq"/>
         <segue reference="cGU-Jg-xaJ"/>
         <segue reference="A7I-xT-UGv"/>
-        <segue reference="rPM-c9-FAf"/>
+        <segue reference="Ksv-JW-3qw"/>
         <segue reference="6Fg-z6-53m"/>
-        <segue reference="PAU-bi-nBp"/>
-        <segue reference="3ON-Jy-Iwf"/>
+        <segue reference="XU6-3C-Wsk"/>
+        <segue reference="sC6-A7-OZR"/>
     </inferredMetricsTieBreakers>
 </document>
