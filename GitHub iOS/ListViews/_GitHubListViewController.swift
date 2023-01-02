@@ -170,9 +170,9 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		collectionLoader = CollectionLoader(helper: clh)
 		collectionLoader.delegate = self
 		collectionLoader.helper.resultsController.delegate = self
-		collectionLoader.loadInitialPage()
 		
 		tableView.reloadData()
+		collectionLoader.loadInitialPage()
 	}
 	
 	@objc
