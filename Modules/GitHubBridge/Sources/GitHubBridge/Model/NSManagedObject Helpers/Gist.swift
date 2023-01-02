@@ -23,6 +23,28 @@ import KVObserver
 @objc(Gist)
 public class Gist : NSManagedObject {
 	
+	private static let subPropertyObservationInfos: [SubPropertyObservingInfo<Gist>] = [
+		SubPropertyObservingInfo(
+			observedKeyPaths: [
+				#keyPath(Gist.files)
+			],
+			action: { strongSelf in
+				/* The list of files changed. Let’s observe the first one to have an up-to-date firstFileName. */
+				let firstFile = strongSelf.files?.firstObject as! File?
+				guard firstFile != strongSelf.observedFile else {return}
+				
+				strongSelf.observingIDForFirstFile.map{ strongSelf.kvObserver.stopObserving(id: $0) }
+				
+				strongSelf.observedFile = firstFile
+				strongSelf.observingIDForFirstFile = firstFile.flatMap{
+					strongSelf.kvObserver.observe(object: $0, keyPath: #keyPath(File.filename), kvoOptions: [.initial, .new], dispatchType: .direct, handler: { [weak self = strongSelf] change in
+						self?.firstFileName = change?[.newKey] as? String
+					})
+				}
+			}
+		)
+	]
+	
 	/* ***************************
 	   MARK: - Core Data Overrides
 	   *************************** */
@@ -35,8 +57,8 @@ public class Gist : NSManagedObject {
 		 * This also means inverse relationship are not set automatically when relationships are modified in this method. */
 		super.awakeFromFetch()
 		
-		if observingIdForFiles == nil {
-			observingIdForFiles = kvObserver.observe(object: self, keyPath: #keyPath(Gist.files), kvoOptions: [.initial], dispatchType: .direct, handler: { [weak self] in self?.processFilesKVOChange($0) })
+		for (idx, observationInfo) in Self.subPropertyObservationInfos.enumerated() {
+			Self.observeKeyPathsIfNeeded(for: observationInfo, on: self, with: kvObserver, kvoOptions: [.initial], observingIDs: &automaticObservingIDs[idx])
 		}
 	}
 	
@@ -45,37 +67,21 @@ public class Gist : NSManagedObject {
 		 * Always DO call super's implementation first. */
 		super.awakeFromInsert()
 		
-		if observingIdForFiles == nil {
-			observingIdForFiles = kvObserver.observe(object: self, keyPath: #keyPath(Gist.files), kvoOptions: [], dispatchType: .direct, handler: { [weak self] in self?.processFilesKVOChange($0) })
+		for (idx, observationInfo) in Self.subPropertyObservationInfos.enumerated() {
+			Self.observeKeyPathsIfNeeded(for: observationInfo, on: self, with: kvObserver, kvoOptions: [], observingIDs: &automaticObservingIDs[idx])
 		}
 	}
 	
 	public override func willTurnIntoFault() {
-		observingIdForFiles.map{ kvObserver.stopObserving(id: $0) }
-		observingIdForFiles = nil
+		for idx in 0..<automaticObservingIDs.count {
+			kvObserver.stopObserving(ids: automaticObservingIDs[idx])
+			automaticObservingIDs[idx].removeAll(keepingCapacity: true)
+		}
 		
-		observingIdForFirstFile.map{ kvObserver.stopObserving(id: $0) }
-		observingIdForFirstFile = nil
+		observingIDForFirstFile.map{ kvObserver.stopObserving(id: $0) }
+		observingIDForFirstFile = nil
 		
 		super.willTurnIntoFault()
-	}
-	
-	/* ********************
-	   MARK: - KVO-Handling
-	   ******************** */
-	
-	private func processFilesKVOChange(_ changes: [NSKeyValueChangeKey: Any]?) {
-		let firstFile = files?.firstObject as! File?
-		guard firstFile != observedFile else {return}
-		
-		observingIdForFirstFile.map{ kvObserver.stopObserving(id: $0) }
-		
-		observedFile = firstFile
-		observingIdForFirstFile = firstFile.flatMap{ kvObserver.observe(object: $0, keyPath: #keyPath(File.filename), kvoOptions: [.initial], dispatchType: .direct, handler: { [weak self] in self?.processFirstFileKVOChange($0) }) }
-	}
-	
-	private func processFirstFileKVOChange(_ changes: [NSKeyValueChangeKey: Any]?) {
-		firstFileName = observedFile?.filename
 	}
 	
 	/* ***************
@@ -83,10 +89,12 @@ public class Gist : NSManagedObject {
 	   *************** */
 	
 	let kvObserver = KVObserver()
-	
-	private var observingIdForFiles: KVObserver.ObservingId?
+	private var automaticObservingIDs = Array(
+		repeating: Set<KVObserver.ObservingId>(),
+		count: Gist.subPropertyObservationInfos.count
+	)
 	
 	private var observedFile: File?
-	private var observingIdForFirstFile: KVObserver.ObservingId?
+	private var observingIDForFirstFile: KVObserver.ObservingId?
 	
 }
