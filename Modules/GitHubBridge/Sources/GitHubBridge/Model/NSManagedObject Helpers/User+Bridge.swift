@@ -119,7 +119,6 @@ extension User : GitHubBridgeObject {
 		let allRelationships: [String: (GitHubBridgeObjects, RelationshipMergeType<NSManagedObject, String>)?] = [:]
 		Self.assertAttributesValidity(allAttributes)
 		Self.assertRelationshipsValidity(allRelationships)
-#warning("TODO: Filter attributes and relationships on requested fields instead of non-nil values.")
 		let attributes = allAttributes.compactMapValues{ $0 }
 		let relationships = allRelationships.compactMapValues{ $0 }
 		return MixedRepresentation(
