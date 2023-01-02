@@ -99,7 +99,7 @@ extension User : GitHubBridgeObject {
 		struct InvalidRemoteObject : Error {}
 		
 		let bmoID = try String(remoteObject["id"]?.doubleValue ?! InvalidRemoteObject())
-		let allAttributes: [String: Any?] = [
+		let allAttributes: [String: Any??] = [
 			#keyPath(User.bmoID):            bmoID,
 			#keyPath(User.avatarURL):        try remoteObject["avatar_url"]  .flatMap(Converters.convertJSONToURL),
 			#keyPath(User.company):          try remoteObject["company"]     .flatMap(Converters.convertJSONToString),
@@ -113,8 +113,8 @@ extension User : GitHubBridgeObject {
 			#keyPath(User.remoteID):         try remoteObject["id"]          .flatMap(Converters.convertJSONToInt),
 			#keyPath(User.updateDate):       try remoteObject["updated_at"]  .flatMap(Converters.convertJSONToDate),
 			#keyPath(User.username):         try remoteObject["login"]       .flatMap(Converters.convertJSONToString),
-			#keyPath(User.zDeletionDateInUsersList): nil,
-			#keyPath(User.zEphemeralDeletionDate):   nil,
+			#keyPath(User.zDeletionDateInUsersList): .some(nil),
+			#keyPath(User.zEphemeralDeletionDate):   .some(nil),
 		]
 		let allRelationships: [String: (GitHubBridgeObjects, RelationshipMergeType<NSManagedObject, String>)?] = [:]
 		Self.assertAttributesValidity(allAttributes)

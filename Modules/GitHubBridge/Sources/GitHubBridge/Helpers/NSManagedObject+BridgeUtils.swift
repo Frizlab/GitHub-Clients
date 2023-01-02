@@ -23,7 +23,7 @@ import BMO
 extension NSManagedObject {
 	
 	/* Crashes if the attributes contain a key that does not exist in the object’s attributes. */
-	static func assertAttributesValidity(_ attributes: [String: Any?]) {
+	static func assertAttributesValidity(_ attributes: [String: Any??]) {
 		attributes.keys.forEach{ assert(entity().propertiesByName[$0] != nil) }
 	}
 	
