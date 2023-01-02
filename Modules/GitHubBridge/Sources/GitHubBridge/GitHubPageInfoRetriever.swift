@@ -25,22 +25,24 @@ public class GitHubPageInfoRetriever : PageInfoRetrieverProtocol {
 	
 	public typealias CompletionResults = LocalDbChanges<NSManagedObject, GitHubBridge.Metadata>?
 	
-	public struct PageInfo : PageInfoProtocol {
+	public enum PageInfo : PageInfoProtocol {
+		case initial
+		case fixedURL(URL)
 	}
 	
 	public init() {
 	}
 	
 	public func initialPageInfo() -> PageInfo {
-		return PageInfo()
+		return .initial
 	}
 	
 	public func nextPageInfo(for completionResults: CompletionResults, from pageInfo: PageInfo) -> PageInfo? {
-		return nil
+		return completionResults?.metadata?.nextPageURL.flatMap{ .fixedURL($0) } ?? .none
 	}
 	
 	public func previousPageInfo(for completionResults: CompletionResults, from pageInfo: PageInfo) -> PageInfo? {
-		return nil
+		return completionResults?.metadata?.previousPageURL.flatMap{ .fixedURL($0) } ?? .none
 	}
 	
 }

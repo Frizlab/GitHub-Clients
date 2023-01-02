@@ -115,7 +115,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 	
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		if indexPath.section == tableView.numberOfSections-1 && indexPath.row >= tableView.numberOfRows(inSection: indexPath.section)-5 {
-//			collectionLoader.loadNextPage()
+			collectionLoader.loadNextPage()
 		}
 	}
 	
@@ -170,7 +170,6 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		let clh = collectionLoaderHelper(for: searchText, context: AppDelegate.shared.context)
 		collectionLoader = CollectionLoader(helper: clh)
 		collectionLoader.delegate = self
-//		collectionLoader.isLoadingFirstPageChangedHandler = { [weak self] in self?.collectionLoaderIsLoadingFirstPageChangedHandler() }
 		collectionLoader.helper.resultsController.delegate = self
 		collectionLoader.loadInitialPage()
 		
