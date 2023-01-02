@@ -163,7 +163,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		guard searchText != currentSearch || collectionLoader == nil else {return}
 		currentSearch = searchText
 		
-//		collectionLoader?.cancelAllLoadings()
+		collectionLoader?.cancelAllLoadings()
 		collectionLoader?.helper.resultsController.delegate = nil
 		
 		let clh = collectionLoaderHelper(for: searchText, context: AppDelegate.shared.context)
