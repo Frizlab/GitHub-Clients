@@ -71,8 +71,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		 * will not be updated and we won't be able to show the refresh control.
 		 * So we have to block the update until the view _did_ appear. */
 		blockSetRefreshControlIsRefreshing = false
-#warning("TODO: Add current loading state in CollectionLoader")
-//		updateRefreshControl(loading: collectionLoader.)
+		updateRefreshControl(loading: collectionLoader.currentPageLoad?.loadingReason == .initialPage)
 	}
 	
 	/* ***********************
