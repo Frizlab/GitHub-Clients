@@ -38,7 +38,7 @@ extension User : GitHubBridgeObject {
 			   Search for Users
 			   **************** */
 			let searchedUsername = searchedUsernameWithStar.dropLast()
-			return GitHubBMOOperation(pathComponents: ["search", "users"], queryItems: [.init(name: "q", value: searchedUsername + " in:login")])
+			return GitHubBMOOperation(pathComponents: ["search", "users"], queryItems: [.init(name: "q", value: searchedUsername + " in:login")], pageInfo: userInfo.pageInfo)
 			
 		} else if let starredRepositoriesPredicates = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 								.filter({ $0.keyPathExpression?.keyPath == "starredRepositories" && $0.predicateOperatorType == .contains }),
@@ -48,7 +48,7 @@ extension User : GitHubBridgeObject {
 			/* ****************************************************
 			   Search for Users Who Have Starred a Given Repository
 			   **************************************************** */
-			return GitHubBMOOperation(pathComponents: ["repos", starredRepository.owner?.username, starredRepository.name, "stargazers"])
+			return GitHubBMOOperation(pathComponents: ["repos", starredRepository.owner?.username, starredRepository.name, "stargazers"], pageInfo: userInfo.pageInfo)
 //			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
 //			userInfo.addedToMixedRepresentations!["starredRepositories"] = ["id": starredRepository.remoteId]
 			
@@ -60,7 +60,7 @@ extension User : GitHubBridgeObject {
 			/* ********************************************************
 			   Search for Users Who Have Subscribed to Given Repository
 			   ******************************************************** */
-			return GitHubBMOOperation(pathComponents: ["repos", watchedRepository.owner?.username, watchedRepository.name, "subscribers"])
+			return GitHubBMOOperation(pathComponents: ["repos", watchedRepository.owner?.username, watchedRepository.name, "subscribers"], pageInfo: userInfo.pageInfo)
 //			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
 //			userInfo.addedToMixedRepresentations!["watchedRepositories"] = ["id": watchedRepository.remoteId]
 			
@@ -79,7 +79,7 @@ extension User : GitHubBridgeObject {
 			} else {
 				username = fetchRequest.predicate?.firstLevelConstants(forKeyPath: "username").last as? String
 			}
-			return GitHubBMOOperation(pathComponents: ["users", username].compactMap{ $0 } as [String])
+			return GitHubBMOOperation(pathComponents: ["users", username].compactMap{ $0 } as [String], pageInfo: userInfo.pageInfo)
 		}
 	}
 	

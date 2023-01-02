@@ -28,6 +28,12 @@ public class GitHubPageInfoRetriever : PageInfoRetrieverProtocol {
 	public enum PageInfo : PageInfoProtocol {
 		case initial
 		case fixedURL(URL)
+		var url: URL? {
+			switch self {
+				case .initial:           return nil
+				case .fixedURL(let url): return url
+			}
+		}
 	}
 	
 	public init() {

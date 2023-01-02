@@ -102,7 +102,7 @@ class UsersListViewController : GitHubListViewController<User> {
 			fetchRequest: fetchRequest,
 			deletionDateProperty: deletionDateProperty,
 			fetchRequestToBridgeRequest: { .fetch($0 as! NSFetchRequest<NSFetchRequestResult>) },
-			pageInfoToRequestUserInfo: { _ in GitHubBridge.RequestUserInfo() }
+			pageInfoToRequestUserInfo: { pageInfo in GitHubBridge.RequestUserInfo(pageInfo: pageInfo) }
 		)
 	}
 	

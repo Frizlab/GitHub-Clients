@@ -32,7 +32,9 @@ public struct GitHubBridge : BridgeProtocol {
 	public typealias LocalDbImporter = BMOCoreDataImporter<LocalDb, Metadata>
 	
 	public struct RequestUserInfo {
-		public init() {
+		public var pageInfo: GitHubPageInfoRetriever.PageInfo?
+		public init(pageInfo: GitHubPageInfoRetriever.PageInfo? = nil) {
+			self.pageInfo = pageInfo
 		}
 	}
 	
