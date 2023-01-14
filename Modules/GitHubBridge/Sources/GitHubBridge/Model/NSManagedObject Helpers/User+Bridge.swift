@@ -49,6 +49,7 @@ extension User : GitHubBridgeObject {
 			   Search for Users Who Have Starred a Given Repository
 			   **************************************************** */
 			return GitHubBMOOperation(pathComponents: ["repos", starredRepository.owner?.username, starredRepository.name, "stargazers"], pageInfo: userInfo.pageInfo)
+#warning("TODO")
 //			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
 //			userInfo.addedToMixedRepresentations!["starredRepositories"] = ["id": starredRepository.remoteId]
 			
@@ -61,6 +62,7 @@ extension User : GitHubBridgeObject {
 			   Search for Users Who Have Subscribed to Given Repository
 			   ******************************************************** */
 			return GitHubBMOOperation(pathComponents: ["repos", watchedRepository.owner?.username, watchedRepository.name, "subscribers"], pageInfo: userInfo.pageInfo)
+#warning("TODO")
 //			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
 //			userInfo.addedToMixedRepresentations!["watchedRepositories"] = ["id": watchedRepository.remoteId]
 			
