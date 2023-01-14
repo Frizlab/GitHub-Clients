@@ -31,7 +31,7 @@ extension NSManagedObject {
 		relationships.forEach{ kv in
 			let (k, v) = kv
 			let relationship = entity().relationshipsByName[k]!
-			assert(relationship.entity == v?.0.localEntity || v == nil)
+			assert(relationship.destinationEntity == v?.0.localEntity || v == nil)
 		}
 	}
 	
