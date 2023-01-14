@@ -52,4 +52,29 @@ enum Converters {
 		return ret
 	}
 	
+	static func convertJSONToBool(_ json: JSON) throws -> Bool {
+		guard let bool = json.boolValue else {
+			throw ConversionFailed()
+		}
+		return bool
+	}
+	
+	/* ***********************
+	   MARK: Optional Variants
+	   *********************** */
+	
+	static func convertJSONToOptionalString(_ json: JSON) throws -> String? {
+		guard !json.isNull else {
+			return nil
+		}
+		return try convertJSONToString(json)
+	}
+	
+	static func convertJSONToOptionalDate(_ json: JSON) throws -> Date? {
+		guard !json.isNull else {
+			return nil
+		}
+		return try convertJSONToDate(json)
+	}
+	
 }

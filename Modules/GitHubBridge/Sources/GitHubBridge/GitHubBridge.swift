@@ -91,7 +91,7 @@ public struct GitHubBridge : BridgeProtocol {
 			metadata.previousPageURL = linkValues.first{ $0.rel.contains("prev") }?.link
 		}
 		
-		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: metadata, localEntity: userInfo.requestEntity, localMergeType: .replace)
+		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: metadata, localEntity: userInfo.requestEntity)
 	}
 	
 	public func importerForRemoteResults(localRepresentations: [GenericLocalDbObject<NSManagedObject, String, Metadata>], rootMetadata: Metadata?, uniquingIDsPerEntities: [NSEntityDescription : Set<String>], cancellationCheck throwIfCancelled: () throws -> Void) throws -> BMOCoreData.BMOCoreDataImporter<LocalDb, Metadata> {

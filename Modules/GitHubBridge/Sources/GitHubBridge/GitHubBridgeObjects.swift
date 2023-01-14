@@ -37,15 +37,28 @@ public struct GitHubBridgeObjects : BridgeObjectsProtocol {
 	
 	public let localEntity: NSEntityDescription
 	public let localMetadata: GitHubBridge.Metadata?
-	public let localMergeType: RelationshipMergeType<NSManagedObject, LocalDb.DbObject.DbRelationshipDescription>
 	
 	public let userInfo: UserInfo
+	
+	public static func forRelationshipsDictionary(
+		remoteObjects: JSON?,
+		localMetadata: GitHubBridge.Metadata? = nil,
+		localEntity: NSEntityDescription,
+		localMergeType: RelationshipMergeType<NSManagedObject, LocalDb.DbObject.DbRelationshipDescription>,
+		userInfo: UserInfo = .init()
+	) -> (Self, RelationshipMergeType<NSManagedObject, LocalDb.DbObject.DbRelationshipDescription>)? {
+		guard let remoteObjects,
+				let bridgeObjects = Self(remoteObjects: remoteObjects.arrayValue ?? [remoteObjects], localMetadata: localMetadata, localEntity: localEntity, userInfo: userInfo)
+		else {
+			return nil
+		}
+		return (bridgeObjects, localMergeType)
+	}
 	
 	public init?(
 		remoteObjects: [JSON],
 		localMetadata: GitHubBridge.Metadata?,
 		localEntity: NSEntityDescription,
-		localMergeType: RelationshipMergeType<NSManagedObject, LocalDb.DbObject.DbRelationshipDescription>,
 		userInfo: UserInfo = .init()
 	) {
 		guard let entityClass = NSClassFromString(localEntity.managedObjectClassName) as? GitHubBridgeObject.Type else {
@@ -55,7 +68,6 @@ public struct GitHubBridgeObjects : BridgeObjectsProtocol {
 		self.remoteObjects = remoteObjects
 		self.localMetadata = localMetadata
 		self.localEntity = localEntity
-		self.localMergeType = localMergeType
 		
 		self.userInfo = userInfo
 		

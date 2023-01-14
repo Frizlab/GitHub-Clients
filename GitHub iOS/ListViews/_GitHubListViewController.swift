@@ -192,6 +192,7 @@ extension GitHubListViewController : CollectionLoaderDelegate {
 	}
 	
 	func didFinishLoading(pageLoadDescription: CLDPageLoadDescription, results: Result<CompletionResults, Error>) {
+		print("DID FINISH LOADING PAGE: \(results)")
 		updateRefreshControl(loading: false)
 	}
 	

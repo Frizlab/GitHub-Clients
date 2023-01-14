@@ -65,16 +65,15 @@ extension User : GitHubBridgeObject {
 //			userInfo.addedToMixedRepresentations!["watchedRepositories"] = ["id": watchedRepository.remoteId]
 			
 		} else {
-			/* ***********************************************************
-			   Generic Case: List User Or Get One If username Is Specified
-			   *********************************************************** */
+			/* ************************************************************
+			   Generic Case: List Users or Get One If Username Is Specified
+			   ************************************************************ */
 			let username: String?
 			if let selfUsernames = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 				.filter({ $0.leftExpression.expressionType == .evaluatedObject || $0.rightExpression.expressionType == .evaluatedObject })
 				.compactMap({ ($0.constantValueExpression?.constantValue as? User)?.username }),
 				let selfUsername = selfUsernames.first, selfUsernames.count == 1
 			{
-				/* But we have a “SELF == user” predicate, so we set that in the REST path resolving info (not supported by the REST mapper). */
 				username = selfUsername
 			} else {
 				username = fetchRequest.predicate?.firstLevelConstants(forKeyPath: "username").last as? String
