@@ -30,9 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	static private(set) var shared: AppDelegate!
 	
 	private(set) var context: NSManagedObjectContext!
-//	private(set) var requestManager: RequestManager!
-	private(set) var bridge: GitHubBridge!
-	private(set) var localDb: GitHubLocalDb!
+	private(set) var gitHubAPI: CoreDataAPI<GitHubBridge>!
 	private(set) var pageInfoRetriever: GitHubPageInfoRetriever!
 	
 	var myUsername: String?
@@ -49,9 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		container.loadPersistentStores(completionHandler: { _, _ in })
 		context = container.viewContext
 		
-//		requestManager = RequestManager(bridges: [GitHubBridge()], resultsImporterFactory: BMOBackResultsImporterForCoreDataWithFastImportRepresentationFactory())
-		bridge = GitHubBridge()
-		localDb = GitHubLocalDb(context: context)
+		gitHubAPI = CoreDataAPI(
+			bridge: GitHubBridge(), localDb: GitHubLocalDb(context: context),
+			defaultSettings: .init(
+				remoteOperationQueue: OperationQueue(), computeOperationQueue: OperationQueue(),
+				remoteIDPropertyName: "bmoID", fetchRequestToBridgeRequest: { r, _ in .fetch(r) }
+			),
+			defaultRequestUserInfo: .init()
+		)
 		pageInfoRetriever = GitHubPageInfoRetriever()
 		
 		return true

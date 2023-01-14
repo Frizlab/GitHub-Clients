@@ -55,18 +55,11 @@ class SceneDelegate : UIResponder, UIWindowSceneDelegate {
 				}
 				let fRequest = User.fetchRequest()
 				fRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(User.username), username)
-				let op = RequestOperation(
-					bridge: AppDelegate.shared.bridge,
-					request: .init(localDb: AppDelegate.shared.localDb, localRequest: .fetch(fRequest as! NSFetchRequest<NSFetchRequestResult>), remoteUserInfo: .init()),
-					remoteOperationQueue: OperationQueue(), computeOperationQueue: OperationQueue()
-				)
-				op.completionBlock = {
-					DispatchQueue.main.async{
-						let u = try? AppDelegate.shared.context.fetch(fRequest).first
-						addUserController(u)
-					}
-				}
-				op.start()
+				AppDelegate.shared.gitHubAPI.remoteFetch(fRequest as! NSFetchRequest<NSFetchRequestResult>, fetchType: .onlyIfNoLocalResults, handler: { _ in
+					/* We’re on the main thread, our context is a view context, it’s ok to launch the fetch request like this. */
+					let u = try? AppDelegate.shared.context.fetch(fRequest).first
+					addUserController(u)
+				})
 				let u = try? AppDelegate.shared.context.fetch(fRequest).first
 				addUserController(u)
 			}

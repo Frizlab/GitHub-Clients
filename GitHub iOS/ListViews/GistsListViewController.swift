@@ -75,13 +75,9 @@ class GistsListViewController: GitHubListViewController<Gist> {
 				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Gist.creationDate), ascending: false)]
 		}
 		return try! BMOCoreDataSearchLoader(
-			bridge: AppDelegate.shared.bridge,
-			localDb: AppDelegate.shared.localDb,
-			pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
-			fetchRequest: fetchRequest,
-			deletionDateProperty: deletionDateProperty,
-			fetchRequestToBridgeRequest: { .fetch($0 as! NSFetchRequest<NSFetchRequestResult>) },
-			pageInfoToRequestUserInfo: { _ in GitHubBridge.RequestUserInfo() }
+			api: AppDelegate.shared.gitHubAPI, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
+			fetchRequest: fetchRequest, deletionDateProperty: deletionDateProperty,
+			pageInfoToRequestUserInfo: { GitHubBridge.RequestUserInfo(pageInfo: $0) }
 		)
 	}
 	

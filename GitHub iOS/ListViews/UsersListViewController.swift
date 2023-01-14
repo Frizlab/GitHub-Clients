@@ -96,13 +96,9 @@ class UsersListViewController : GitHubListViewController<User> {
 		}
 		
 		return try! BMOCoreDataSearchLoader(
-			bridge: AppDelegate.shared.bridge,
-			localDb: AppDelegate.shared.localDb,
-			pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
-			fetchRequest: fetchRequest,
-			deletionDateProperty: deletionDateProperty,
-			fetchRequestToBridgeRequest: { .fetch($0 as! NSFetchRequest<NSFetchRequestResult>) },
-			pageInfoToRequestUserInfo: { pageInfo in GitHubBridge.RequestUserInfo(pageInfo: pageInfo) }
+			api: AppDelegate.shared.gitHubAPI, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
+			fetchRequest: fetchRequest, deletionDateProperty: deletionDateProperty,
+			pageInfoToRequestUserInfo: { GitHubBridge.RequestUserInfo(pageInfo: $0) }
 		)
 	}
 	

@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/Frizlab/BMO.git",
         "state": {
           "branch": "dev.bmo2",
-          "revision": "ec34dd29ee40d16b1c834bf06236bc73b26db243",
+          "revision": "0381c8e3b496991c94f80094ac91f0eab4ba8aa4",
           "version": null
         }
       },
@@ -33,7 +33,7 @@
         "repositoryURL": "https://github.com/Frizlab/CollectionLoader.git",
         "state": {
           "branch": "dev.bmo2",
-          "revision": "775c23ce2e97aecb7e43205d0bd6e09598514ed5",
+          "revision": "58345b7b12f6725a87e17517c08a54d211236cbc",
           "version": null
         }
       },
@@ -60,7 +60,7 @@
         "repositoryURL": "https://github.com/Frizlab/LinkHeaderParser.git",
         "state": {
           "branch": "main",
-          "revision": "04735ae9bb116a8cb9eed870f989c09df93993fe",
+          "revision": "1c58f73654b70ed1582cdbaca4e39e7256cc6254",
           "version": null
         }
       },
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/happn-app/RetryingOperation.git",
         "state": {
           "branch": null,
-          "revision": "4d69ec3aa4cb5d33e973fcfe01378a1d49e351f2",
-          "version": "1.1.7"
+          "revision": "c64f98966916fc184f7575dd97e2eba9962a3d33",
+          "version": "1.1.8"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
           "branch": null,
-          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
-          "version": "1.4.2"
+          "revision": "6fe203dc33195667ce1759bf0182975e4653ba1c",
+          "version": "1.4.4"
         }
       },
       {
