@@ -51,7 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			bridge: GitHubBridge(), localDb: GitHubLocalDb(context: context),
 			defaultSettings: .init(
 				remoteOperationQueue: OperationQueue(), computeOperationQueue: OperationQueue(),
-				remoteIDPropertyName: "bmoID", fetchRequestToBridgeRequest: { r, _ in .fetch(r) }
+				remoteIDPropertyName: "bmoID",
+				fetchRequestToBridgeRequest: { r, _ in .fetch(r) },
+				createObjectBridgeRequest: { r, w in .create(r, w) },
+				updateObjectBridgeRequest: { r, w in .update(r, w) },
+				deleteObjectBridgeRequest: { r, w in .delete(r, w) }
 			),
 			defaultRequestUserInfo: .init()
 		)

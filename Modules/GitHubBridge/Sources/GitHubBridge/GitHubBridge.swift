@@ -54,10 +54,10 @@ public struct GitHubBridge : BridgeProtocol {
 	public init() {
 	}
 	
-	public func requestHelper(for request: Request<LocalDb, RequestUserInfo>) -> any RequestHelperProtocol<NSManagedObject, Metadata> {
+	public func requestHelper(for request: Request<LocalDb, RequestUserInfo>) -> any RequestHelperProtocol<NSManagedObjectContext, NSManagedObject, Metadata> {
 		switch request.localRequest {
-			case let .fetch(fetchRequest):  return BMOCoreDataFetchRequestHelper(request: fetchRequest, context: request.localDb.context, fetchType: .always)
-			case .create, .update, .delete: return BMOCoreDataSaveRequestHelper(context: request.localDb.context, saveWorkflow: .saveBeforeBackReturns)
+			case let .fetch(fetchRequest):                                return BMOCoreDataFetchRequestHelper(request: fetchRequest, fetchType: .always)
+			case let .create(_, w), let .update(_, w), let .delete(_, w): return BMOCoreDataSaveRequestHelper(saveWorkflow: w)
 		}
 	}
 	
@@ -72,9 +72,9 @@ public struct GitHubBridge : BridgeProtocol {
 					.onContext_operation(for: request, userInfo: bmoRequest.remoteUserInfo))
 					.flatMap{ ($0, UserInfo(requestEntity: entity)) }
 				
-			case let .create(object): return try ((object as? GitHubBridgeObject)?.onContext_operationForCreation(userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
-			case let .update(object): return try ((object as? GitHubBridgeObject)?.onContext_operationForUpdate(  userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
-			case let .delete(object): return try ((object as? GitHubBridgeObject)?.onContext_operationForDeletion(userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
+			case let .create(object, _): return try ((object as? GitHubBridgeObject)?.onContext_operationForCreation(userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
+			case let .update(object, _): return try ((object as? GitHubBridgeObject)?.onContext_operationForUpdate(  userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
+			case let .delete(object, _): return try ((object as? GitHubBridgeObject)?.onContext_operationForDeletion(userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
 		}
 	}
 	

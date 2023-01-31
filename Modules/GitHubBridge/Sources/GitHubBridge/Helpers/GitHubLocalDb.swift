@@ -17,20 +17,22 @@ import CoreData
 import Foundation
 
 import BMO
+import BMOCoreData
 
 
 
 public struct GitHubLocalDb : LocalDbProtocol {
 	
 	public typealias UniquingID = String
+	public typealias SaveWorkflow = BMOCoreDataSaveRequestHelper<GitHubBridge.Metadata>.SaveWorkflow
 	
 	public typealias DbObject = NSManagedObject
 	public enum DbRequest {
 		
 		case fetch(NSFetchRequest<NSFetchRequestResult>)
-		case create(NSManagedObject)
-		case update(NSManagedObject)
-		case delete(NSManagedObject)
+		case create(NSManagedObject, SaveWorkflow)
+		case update(NSManagedObject, SaveWorkflow)
+		case delete(NSManagedObject, SaveWorkflow)
 		
 	}
 	

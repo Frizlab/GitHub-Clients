@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/Frizlab/BMO.git",
         "state": {
           "branch": "dev.bmo2",
-          "revision": "0381c8e3b496991c94f80094ac91f0eab4ba8aa4",
+          "revision": "0c1f57549ba574036191e72a3bae83e78c6fcf87",
           "version": null
         }
       },
@@ -33,7 +33,7 @@
         "repositoryURL": "https://github.com/Frizlab/CollectionLoader.git",
         "state": {
           "branch": "dev.bmo2",
-          "revision": "58345b7b12f6725a87e17517c08a54d211236cbc",
+          "revision": "b2c7427700baa169a46080bf5bf92e91a78d72e0",
           "version": null
         }
       },
