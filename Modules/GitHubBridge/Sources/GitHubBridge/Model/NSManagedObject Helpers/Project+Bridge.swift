@@ -24,7 +24,7 @@ import UnwrapOrThrow
 
 extension Repository : GitHubBridgeObject {
 	
-	public static func onContext_operation(for fetchRequest: NSFetchRequest<NSFetchRequestResult>, userInfo: GitHubBridge.RequestUserInfo) throws -> GitHubBMOOperation? {
+	public static func onContext_operation(for fetchRequest: NSFetchRequest<NSFetchRequestResult>, userInfo: GitHubBridge.RequestUserInfo) throws -> (GitHubBMOOperation, GitHubBridgeObjects.UserInfo?)? {
 		/* /repos/:owner/:repo    <-- Get one repository */
 		/* /user/repos            <-- Lists all repositories on which the authenticated user has explicit permission to access */
 		/* /users/:username/repos <-- Lists public repositories for the specified user */
@@ -52,9 +52,9 @@ extension Repository : GitHubBridgeObject {
 //					.init(name: "sort",  value: "stars"),
 //					.init(name: "order", value: "desc"),
 				]
-				return GitHubBMOOperation(pathComponents: ["search", "repositories"], queryItems: queryItems, pageInfo: userInfo.pageInfo)
+				return GitHubBMOOperation(pathComponents: ["search", "repositories"], queryItems: queryItems, pageInfo: userInfo.pageInfo).flatMap{ ($0, nil) }
 			} else {
-				return GitHubBMOOperation(pathComponents: ["repositories"], pageInfo: userInfo.pageInfo)
+				return GitHubBMOOperation(pathComponents: ["repositories"], pageInfo: userInfo.pageInfo).flatMap{ ($0, nil) }
 			}
 			
 		} else if let owners = owners as? [User], let ownerUsername = owners.first?.username, owners.count == 1 {
@@ -65,13 +65,13 @@ extension Repository : GitHubBridgeObject {
 				.init(name: "sort",      value: "updated"),
 				.init(name: "direction", value: "desc"),
 			]
-			return GitHubBMOOperation(pathComponents: ["users", ownerUsername, "repos"], queryItems: queryItems, pageInfo: userInfo.pageInfo)
+			return GitHubBMOOperation(pathComponents: ["users", ownerUsername, "repos"], queryItems: queryItems, pageInfo: userInfo.pageInfo).flatMap{ ($0, nil) }
 			
 		} else if let selfOwnerUsername = selfRepository?.owner?.username, let selfName = selfRepository?.name {
 			/* ******************
 			   Get One Repository
 			   ****************** */
-			return GitHubBMOOperation(pathComponents: ["repos", selfOwnerUsername, selfName], pageInfo: userInfo.pageInfo)
+			return GitHubBMOOperation(pathComponents: ["repos", selfOwnerUsername, selfName], pageInfo: userInfo.pageInfo).flatMap{ ($0, nil) }
 			
 		} else {
 			return nil

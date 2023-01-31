@@ -23,7 +23,12 @@ import UnwrapOrThrow
 
 extension User : GitHubBridgeObject {
 	
-	public static func onContext_operation(for fetchRequest: NSFetchRequest<NSFetchRequestResult>, userInfo: GitHubBridge.RequestUserInfo) throws -> GitHubBMOOperation? {
+	public struct BridgeObjectsUserInfo {
+		var starredRepositoryID: Int64?
+		var watchedRepositoryID: Int64?
+	}
+	
+	public static func onContext_operation(for fetchRequest: NSFetchRequest<NSFetchRequestResult>, userInfo: GitHubBridge.RequestUserInfo) throws -> (GitHubBMOOperation, GitHubBridgeObjects.UserInfo?)? {
 		/* /users/:username <-- Get one user */
 		/* /users           <-- Lists all the users */
 		/* /user            <-- Get the authenticated user */
@@ -38,7 +43,7 @@ extension User : GitHubBridgeObject {
 			   Search for Users
 			   **************** */
 			let searchedUsername = searchedUsernameWithStar.dropLast()
-			return GitHubBMOOperation(pathComponents: ["search", "users"], queryItems: [.init(name: "q", value: searchedUsername + " in:login")], pageInfo: userInfo.pageInfo)
+			return GitHubBMOOperation(pathComponents: ["search", "users"], queryItems: [.init(name: "q", value: searchedUsername + " in:login")], pageInfo: userInfo.pageInfo).flatMap{ ($0, nil) }
 			
 		} else if let starredRepositoriesPredicates = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 								.filter({ $0.keyPathExpression?.keyPath == "starredRepositories" && $0.predicateOperatorType == .contains }),
@@ -48,10 +53,12 @@ extension User : GitHubBridgeObject {
 			/* ****************************************************
 			   Search for Users Who Have Starred a Given Repository
 			   **************************************************** */
-			return GitHubBMOOperation(pathComponents: ["repos", starredRepository.owner?.username, starredRepository.name, "stargazers"], pageInfo: userInfo.pageInfo)
-#warning("TODO")
-//			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
-//			userInfo.addedToMixedRepresentations!["starredRepositories"] = ["id": starredRepository.remoteId]
+			return GitHubBMOOperation(pathComponents: ["repos", starredRepository.owner?.username, starredRepository.name, "stargazers"], pageInfo: userInfo.pageInfo).flatMap{
+				(
+					$0,
+					.init(objectSpecific: BridgeObjectsUserInfo(starredRepositoryID: starredRepository.remoteID))
+				)
+			}
 			
 		} else if let watchedRepositoriesPredicates = fetchRequest.predicate?.firstLevelComparisonSubpredicates
 								.filter({ $0.keyPathExpression?.keyPath == "watchedRepositories" && $0.predicateOperatorType == .contains }),
@@ -61,10 +68,12 @@ extension User : GitHubBridgeObject {
 			/* ********************************************************
 			   Search for Users Who Have Subscribed to Given Repository
 			   ******************************************************** */
-			return GitHubBMOOperation(pathComponents: ["repos", watchedRepository.owner?.username, watchedRepository.name, "subscribers"], pageInfo: userInfo.pageInfo)
-#warning("TODO")
-//			userInfo.addedToMixedRepresentations = userInfo.addedToMixedRepresentations ?? [:]
-//			userInfo.addedToMixedRepresentations!["watchedRepositories"] = ["id": watchedRepository.remoteId]
+			return GitHubBMOOperation(pathComponents: ["repos", watchedRepository.owner?.username, watchedRepository.name, "subscribers"], pageInfo: userInfo.pageInfo).flatMap{
+				(
+					$0,
+					.init(objectSpecific: BridgeObjectsUserInfo(watchedRepositoryID: watchedRepository.remoteID))
+				)
+			}
 			
 		} else {
 			/* ************************************************************
@@ -80,7 +89,7 @@ extension User : GitHubBridgeObject {
 			} else {
 				username = fetchRequest.predicate?.firstLevelConstants(forKeyPath: "username").last as? String
 			}
-			return GitHubBMOOperation(pathComponents: ["users", username].compactMap{ $0 } as [String], pageInfo: userInfo.pageInfo)
+			return GitHubBMOOperation(pathComponents: ["users", username].compactMap{ $0 } as [String], pageInfo: userInfo.pageInfo).flatMap{ ($0, nil) }
 		}
 	}
 	
@@ -117,7 +126,15 @@ extension User : GitHubBridgeObject {
 			#keyPath(User.zDeletionDateInUsersList): .some(nil),
 			#keyPath(User.zEphemeralDeletionDate):   .some(nil),
 		]
-		let allRelationships: [String: (GitHubBridgeObjects, RelationshipMergeType<NSManagedObject, String>)?] = [:]
+		var allRelationships: [String: (GitHubBridgeObjects, RelationshipMergeType<NSManagedObject, String>)?] = [:]
+		if let bridgeObjectsInfo = userInfo.objectSpecific as? BridgeObjectsUserInfo {
+			if let id = bridgeObjectsInfo.starredRepositoryID {
+				allRelationships[#keyPath(User.starredRepositories)] = (GitHubBridgeObjects(remoteObjects: [.object(["id": .number(Double(id))])], localMetadata: nil, localEntity: Repository.entity())!, .append)
+			}
+			if let id = bridgeObjectsInfo.watchedRepositoryID {
+				allRelationships[#keyPath(User.watchedRepositories)] = (GitHubBridgeObjects(remoteObjects: [.object(["id": .number(Double(id))])], localMetadata: nil, localEntity: Repository.entity())!, .append)
+			}
+		}
 		Self.assertAttributesValidity(allAttributes)
 		Self.assertRelationshipsValidity(allRelationships)
 		let attributes = allAttributes.compactMapValues{ $0 }

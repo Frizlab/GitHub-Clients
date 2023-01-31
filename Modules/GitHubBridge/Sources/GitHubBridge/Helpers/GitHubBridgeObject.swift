@@ -22,7 +22,7 @@ import BMO
 
 public protocol GitHubBridgeObject {
 	
-	static func onContext_operation(for fetchRequest: NSFetchRequest<NSFetchRequestResult>, userInfo: GitHubBridge.RequestUserInfo) throws -> GitHubBMOOperation?
+	static func onContext_operation(for fetchRequest: NSFetchRequest<NSFetchRequestResult>, userInfo: GitHubBridge.RequestUserInfo) throws -> (GitHubBMOOperation, GitHubBridgeObjects.UserInfo?)?
 	func onContext_operationForCreation(userInfo: GitHubBridge.RequestUserInfo) throws -> GitHubBMOOperation?
 	func onContext_operationForUpdate(  userInfo: GitHubBridge.RequestUserInfo) throws -> GitHubBMOOperation?
 	func onContext_operationForDeletion(userInfo: GitHubBridge.RequestUserInfo) throws -> GitHubBMOOperation?

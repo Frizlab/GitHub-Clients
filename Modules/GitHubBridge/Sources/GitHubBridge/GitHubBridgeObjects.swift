@@ -29,7 +29,9 @@ public struct GitHubBridgeObjects : BridgeObjectsProtocol {
 	public typealias Metadata = GitHubBridge.Metadata
 	
 	public struct UserInfo {
-		public init() {
+		public var objectSpecific: Any?
+		public init(objectSpecific: Any? = nil) {
+			self.objectSpecific = objectSpecific
 		}
 	}
 	

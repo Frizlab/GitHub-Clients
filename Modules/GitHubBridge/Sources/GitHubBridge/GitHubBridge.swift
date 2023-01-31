@@ -45,6 +45,7 @@ public struct GitHubBridge : BridgeProtocol {
 	
 	public struct UserInfo {
 		var requestEntity: NSEntityDescription
+		var bridgeObjectsUserInfo: GitHubBridgeObjects.UserInfo?
 	}
 	
 	public static var coreDataModel: NSManagedObjectModel {
@@ -70,7 +71,7 @@ public struct GitHubBridge : BridgeProtocol {
 				}
 				return try ((NSClassFromString(entity.managedObjectClassName) as? GitHubBridgeObject.Type)?
 					.onContext_operation(for: request, userInfo: bmoRequest.remoteUserInfo))
-					.flatMap{ ($0, UserInfo(requestEntity: entity)) }
+					.flatMap{ ($0.0, UserInfo(requestEntity: entity, bridgeObjectsUserInfo: $0.1)) }
 				
 			case let .create(object, _): return try ((object as? GitHubBridgeObject)?.onContext_operationForCreation(userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
 			case let .update(object, _): return try ((object as? GitHubBridgeObject)?.onContext_operationForUpdate(  userInfo: bmoRequest.remoteUserInfo)).flatMap{ ($0, UserInfo(requestEntity: object.entity)) }
@@ -91,7 +92,7 @@ public struct GitHubBridge : BridgeProtocol {
 			metadata.previousPageURL = linkValues.first{ $0.rel.contains("prev") }?.link
 		}
 		
-		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: metadata, localEntity: userInfo.requestEntity)
+		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: metadata, localEntity: userInfo.requestEntity, userInfo: userInfo.bridgeObjectsUserInfo ?? .init())
 	}
 	
 	public func importerForRemoteResults(localRepresentations: [GenericLocalDbObject<NSManagedObject, String, Metadata>], rootMetadata: Metadata?, uniquingIDsPerEntities: [NSEntityDescription : Set<String>], cancellationCheck throwIfCancelled: () throws -> Void) throws -> BMOCoreData.BMOCoreDataImporter<LocalDb, Metadata> {
