@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 import Foundation
+import os.log
 
 import Alamofire
 import BMO
@@ -61,9 +62,12 @@ public class GitHubBMOOperation : RetryingOperation {
 		/* Note: We should not join the path components like so (what happens if one contains a “/”?). */
 		let expectedURL = URL(string: pathComponents.joined(separator: "/"), relativeTo: GitHubBridgeConfig.apiRoot)!
 		let url = pageInfo?.url ?? expectedURL
-		guard expectedURL.pathComponents == url.pathComponents else {
-			/* If the expected URL and the page info URL do not match, we do not allow starting the operation. */
-			return nil
+		if expectedURL.pathComponents != url.pathComponents {
+			/* If the expected URL and the page info URL do not match, we log an info message.
+			 * In theory, something’s not right; in practice GitHub returns the canonical URL for paging and it can be different than the one we use. */
+			if #available(iOS 14.0, *) {
+				Logger().info("Expected path components \(expectedURL.pathComponents, privacy: .public) but got \(url.pathExtension, privacy: .public). This usually not a big deal and only means GitHub returned a canonical URL for the paging URLs which can be different than the URL computed by the bridge.")
+			}
 		}
 		
 		var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
