@@ -81,7 +81,7 @@ public struct GitHubBridge : BridgeProtocol {
 	
 	public func bridgeObjects(for finishedRemoteOperation: GitHubBMOOperation, userInfo: UserInfo) throws -> GitHubBridgeObjects? {
 		let operationResult = try finishedRemoteOperation.results.get()
-		let objects = operationResult.arrayValue ?? [operationResult]
+		let objects = operationResult.arrayValue ?? operationResult["items"]?.arrayValue ?? [operationResult]
 		
 		/* Let’s parse the Link header. */
 		var metadata = Metadata()
