@@ -44,7 +44,7 @@ class IssueViewController : UIViewController, NSFetchedResultsControllerDelegate
 		self.fetchedResultsController?.delegate = self
 		try! self.fetchedResultsController?.performFetch()
 		
-		AppDelegate.shared.gitHubAPI.remoteFetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+		AppDelegate.shared.gitHubAPI.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
 		
 		updateUI()
 	}

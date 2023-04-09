@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/Frizlab/BMO.git",
         "state": {
           "branch": "dev.bmo2",
-          "revision": "0c1f57549ba574036191e72a3bae83e78c6fcf87",
+          "revision": "afca4b5872795b182eae598fc49fbd7925cc4990",
           "version": null
         }
       },
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
           "branch": null,
-          "revision": "6fe203dc33195667ce1759bf0182975e4653ba1c",
-          "version": "1.4.4"
+          "revision": "32e8d724467f8fe623624570367e3d50c5638e46",
+          "version": "1.5.2"
         }
       },
       {

@@ -50,7 +50,7 @@ class UserViewController : UIViewController, NSFetchedResultsControllerDelegate 
 		try! fetchedResultsController?.performFetch()
 		
 		if shouldRefreshUserOnLoad {
-			AppDelegate.shared.gitHubAPI.remoteFetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+			AppDelegate.shared.gitHubAPI.fetch(fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
 		}
 		
 		updateUI()

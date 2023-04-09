@@ -17,6 +17,7 @@ import CoreData
 import Foundation
 
 import BMO
+import BMOCoreData
 import CollectionLoader
 
 

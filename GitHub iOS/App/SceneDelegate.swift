@@ -55,7 +55,7 @@ class SceneDelegate : UIResponder, UIWindowSceneDelegate {
 				}
 				let fRequest = User.fetchRequest()
 				fRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(User.username), username)
-				AppDelegate.shared.gitHubAPI.remoteFetch(fRequest as! NSFetchRequest<NSFetchRequestResult>, fetchType: .onlyIfNoLocalResults, handler: { _ in
+				AppDelegate.shared.gitHubAPI.fetch(fRequest as! NSFetchRequest<NSFetchRequestResult>, fetchType: .onlyIfNoLocalResults, handler: { _ in
 					/* We’re on the main thread, our context is a view context, it’s ok to launch the fetch request like this. */
 					let u = try? AppDelegate.shared.context.fetch(fRequest).first
 					addUserController(u)
