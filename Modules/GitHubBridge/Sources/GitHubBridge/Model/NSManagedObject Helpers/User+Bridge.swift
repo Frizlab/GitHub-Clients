@@ -112,11 +112,11 @@ extension User : GitHubBridgeObject {
 		let allAttributes: [String: Any??] = [
 			#keyPath(User.bmoID):            bmoID,
 			#keyPath(User.avatarURL):        try remoteObject["avatar_url"]  .flatMap(Converters.convertJSONToURL),
-			#keyPath(User.company):          try remoteObject["company"]     .flatMap(Converters.convertJSONToString),
+			#keyPath(User.company):          try remoteObject["company"]     .flatMap(Converters.convertJSONToOptionalString),
 			#keyPath(User.creationDate):     try remoteObject["created_at"]  .flatMap(Converters.convertJSONToDate),
 			#keyPath(User.followersCount):   try remoteObject["followers"]   .flatMap(Converters.convertJSONToInt),
 			#keyPath(User.followingCount):   try remoteObject["following"]   .flatMap(Converters.convertJSONToInt),
-			#keyPath(User.name):             try remoteObject["name"]        .flatMap(Converters.convertJSONToString),
+			#keyPath(User.name):             try remoteObject["name"]        .flatMap(Converters.convertJSONToOptionalString),
 			#keyPath(User.nodeID):           try remoteObject["node_id"]     .flatMap(Converters.convertJSONToString),
 			#keyPath(User.publicGistsCount): try remoteObject["public_gists"].flatMap(Converters.convertJSONToInt),
 			#keyPath(User.publicReposCount): try remoteObject["public_repos"].flatMap(Converters.convertJSONToInt),
