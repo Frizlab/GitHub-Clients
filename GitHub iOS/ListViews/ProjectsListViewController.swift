@@ -84,7 +84,7 @@ class ProjectsListViewController : GitHubListViewController<Repository> {
 				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Repository.updateDate), ascending: false)]
 		}
 		
-		return try! BMOCoreDataSearchLoader(
+		return BMOCoreDataSearchLoader(
 			api: AppDelegate.shared.gitHubAPI, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
 			fetchRequest: fetchRequest, deletionDateProperty: deletionDateProperty, apiOrderProperty: apiOrderProperty,
 			pageInfoToRequestUserInfo: { GitHubBridge.RequestUserInfo(pageInfo: $0) }

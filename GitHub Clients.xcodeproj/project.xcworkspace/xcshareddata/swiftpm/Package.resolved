@@ -6,8 +6,17 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "78424be314842833c04bc3bef5b72e85fff99204",
-          "version": "5.6.4"
+          "revision": "bc268c28fb170f494de9e9927c371b8342979ece",
+          "version": "5.7.1"
+        }
+      },
+      {
+        "package": "BMO",
+        "repositoryURL": "https://github.com/Frizlab/BMO.git",
+        "state": {
+          "branch": "main",
+          "revision": "8af6b087077bfb438d8d4254804020251a75f1d3",
+          "version": null
         }
       },
       {
@@ -20,20 +29,11 @@
         }
       },
       {
-        "package": "BMO",
-        "repositoryURL": "https://github.com/Frizlab/BMO.git",
-        "state": {
-          "branch": "dev.bmo2",
-          "revision": "afca4b5872795b182eae598fc49fbd7925cc4990",
-          "version": null
-        }
-      },
-      {
         "package": "CollectionLoader",
         "repositoryURL": "https://github.com/Frizlab/CollectionLoader.git",
         "state": {
-          "branch": "dev.bmo2",
-          "revision": "b2c7427700baa169a46080bf5bf92e91a78d72e0",
+          "branch": "main",
+          "revision": "0ede138d84ef429b0defd0747c3806df805f2ccd",
           "version": null
         }
       },

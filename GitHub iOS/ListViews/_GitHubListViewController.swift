@@ -169,6 +169,7 @@ class GitHubListViewController<ListElement : NSManagedObject> : UITableViewContr
 		let clh = collectionLoaderHelper(for: searchText, context: AppDelegate.shared.context)
 		collectionLoader = CollectionLoader(helper: clh)
 		collectionLoader.delegate = self
+		try! collectionLoader.helper.resultsController.performFetch()
 		collectionLoader.helper.resultsController.delegate = self
 		
 		tableView.reloadData()

@@ -95,7 +95,7 @@ class UsersListViewController : GitHubListViewController<User> {
 				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(User.remoteID), ascending: true)]
 		}
 		
-		return try! BMOCoreDataSearchLoader(
+		return BMOCoreDataSearchLoader(
 			api: AppDelegate.shared.gitHubAPI, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
 			fetchRequest: fetchRequest, deletionDateProperty: deletionDateProperty,
 			pageInfoToRequestUserInfo: { GitHubBridge.RequestUserInfo(pageInfo: $0) }

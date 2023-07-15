@@ -75,7 +75,7 @@ class IssuesListViewController : GitHubListViewController<Issue> {
 				fetchRequest.predicate = NSPredicate(format: "%K CONTAINS %@", #keyPath(Issue.assignees), user)
 				fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Gist.creationDate), ascending: false)]
 		}
-		return try! BMOCoreDataSearchLoader(
+		return BMOCoreDataSearchLoader(
 			api: AppDelegate.shared.gitHubAPI, pageInfoRetriever: AppDelegate.shared.pageInfoRetriever,
 			fetchRequest: fetchRequest, deletionDateProperty: deletionDateProperty,
 			pageInfoToRequestUserInfo: { GitHubBridge.RequestUserInfo(pageInfo: $0) }
