@@ -95,12 +95,13 @@ public struct GitHubBridge : BridgeProtocol {
 		return GitHubBridgeObjects(remoteObjects: objects, localMetadata: metadata, localEntity: userInfo.requestEntity, userInfo: userInfo.bridgeObjectsUserInfo ?? .init())
 	}
 	
-	public func importerForRemoteResults(localRepresentations: [GenericLocalDbObject<NSManagedObject, String, Metadata>], rootMetadata: Metadata?, uniquingIDsPerEntities: [NSEntityDescription : Set<String>], cancellationCheck throwIfCancelled: () throws -> Void) throws -> BMOCoreData.BMOCoreDataImporter<LocalDb, Metadata> {
+	public func importerForRemoteResults(localRepresentations: [GenericLocalDbObject<NSManagedObject, String, Metadata>], rootMetadata: Metadata?, uniquingIDsPerEntities: [NSEntityDescription : Set<String>], updatedObjectIDsPerEntities: [NSEntityDescription : Set<NSManagedObjectID>], cancellationCheck throwIfCancelled: () throws -> Void) throws -> BMOCoreDataImporter<LocalDb, Metadata> {
 		return try BMOCoreDataImporter(
 			uniquingProperty: "bmoID",
 			localRepresentations: localRepresentations,
 			rootMetadata: rootMetadata,
 			uniquingIDsPerEntities: uniquingIDsPerEntities,
+			updatedObjectIDsPerEntities: updatedObjectIDsPerEntities,
 			cancellationCheck: throwIfCancelled
 		)
 	}

@@ -7,7 +7,7 @@ let package = Package(
 	platforms: [.iOS(.v13)],
 	products: [.library(name: "GitHubBridge", targets: ["GitHubBridge"])],
 	dependencies: [
-		.package(url: "https://github.com/Frizlab/BMO.git",              branch: "main"),
+		.package(url: "https://github.com/Frizlab/BMO.git",              branch: "develop"),
 		.package(url: "https://github.com/Frizlab/LinkHeaderParser.git", branch: "main"),
 		.package(url: "https://github.com/Frizlab/UnwrapOrThrow.git",    from: "1.0.0"),
 		.package(url: "https://github.com/iwill/generic-json-swift.git", from: "2.0.2")

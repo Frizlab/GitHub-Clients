@@ -14,8 +14,8 @@
         "package": "BMO",
         "repositoryURL": "https://github.com/Frizlab/BMO.git",
         "state": {
-          "branch": "main",
-          "revision": "8af6b087077bfb438d8d4254804020251a75f1d3",
+          "branch": "develop",
+          "revision": "4c3e3854fb3ffb71e404dbc64ab2a2863a2c2af0",
           "version": null
         }
       },
@@ -32,8 +32,8 @@
         "package": "CollectionLoader",
         "repositoryURL": "https://github.com/Frizlab/CollectionLoader.git",
         "state": {
-          "branch": "main",
-          "revision": "0ede138d84ef429b0defd0747c3806df805f2ccd",
+          "branch": "develop",
+          "revision": "9ebe700a1c6f253c9ce07222ca156ea9785ea591",
           "version": null
         }
       },

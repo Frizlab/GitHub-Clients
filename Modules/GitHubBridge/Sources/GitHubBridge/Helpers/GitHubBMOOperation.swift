@@ -24,7 +24,7 @@ import UnwrapOrThrow
 
 
 
-public class GitHubBMOOperation : RetryingOperation {
+public class GitHubBMOOperation : RetryingOperation, @unchecked Sendable {
 	
 	public static var gitHubToken: String? = {
 		/* Let's read the token from a hard-coded file. */
